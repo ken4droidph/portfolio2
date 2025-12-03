@@ -9,7 +9,7 @@ const skills = [
   { name: "JavaScript", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" },
   { name: "PHP", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" },
   { name: "MySQL", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" },
-  { name: "Shopify Liquid", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/shopify/shopify-original.svg" },
+  { name: "Shopify Liquid", icon: "https://cdn.simpleicons.org/shopify/7AB55C" },
   { name: "WordPress", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/wordpress/wordpress-plain.svg" },
   { name: "Lovable", icon: "https://lovable.dev/favicon.ico" },
   { name: "Windsurf", icon: "https://codeium.com/favicon.ico" },
@@ -80,7 +80,7 @@ const About = () => {
               </motion.span>
               <h2 className="text-4xl md:text-5xl font-bold text-foreground">
                 I'm <span className="gradient-text">Keneth</span>,<br />
-                Creative Developer
+                a Creative AI-Assisted <p> Full-Stack Developer.</p>
               </h2>
             </div>
 

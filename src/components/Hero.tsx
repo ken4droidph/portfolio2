@@ -20,6 +20,39 @@ const Hero = () => {
         />
       </div>
 
+      <div className="absolute inset-0 z-0">
+        <div className="container mx-auto h-full px-6 flex items-center">
+          <motion.div
+            className="flex flex-col md:flex-row items-end md:items-center justify-between gap-6 w-full"
+          >
+            <motion.h1
+              initial={{ opacity: 0, x: -200, y: -40 }}
+              animate={{
+                opacity: 1,
+                x: 0,
+                y: [-40, 20, -15, 8, -4, 0],
+              }}
+              transition={{ duration: 2, ease: "easeOut" }}
+              className="text-4xl md:text-6xl font-bold text-foreground max-w-xl text-right md:text-left"
+            >
+              Hi, I&apos;m <span className="gradient-text">Keneth</span>
+            </motion.h1>
+            <motion.h1
+              initial={{ opacity: 0, x: 200, y: -40 }}
+              animate={{
+                opacity: 1,
+                x: 0,
+                y: [-40, 20, -15, 8, -4, 0],
+              }}
+              transition={{ duration: 2, ease: "easeOut" }}
+              className="text-4xl md:text-6xl font-bold text-foreground text-right whitespace-nowrap"
+            >
+              Hi, I&apos;m <span className="gradient-text">AI</span>
+            </motion.h1>
+          </motion.div>
+        </div>
+      </div>
+
       {/* Scroll Indicator */}
       <motion.div
         initial={{ opacity: 0 }}

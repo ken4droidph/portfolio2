@@ -4,7 +4,7 @@ import { Heart } from "@phosphor-icons/react";
 const footerLinks = [
   { label: "About", href: "#about" },
   { label: "Projects", href: "#projects" },
-  { label: "Testimonials", href: "#testimonials" },
+  { label: "My Resume", href: "#resume" },
   { label: "Contact", href: "#contact" },
 ];
 

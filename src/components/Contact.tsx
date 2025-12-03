@@ -1,16 +1,14 @@
 import { motion } from "framer-motion";
 import {
-  GithubLogo,
-  LinkedinLogo,
-  TwitterLogo,
-  DribbbleLogo,
+  YoutubeLogo,
+  TiktokLogo,
+  FacebookLogo,
 } from "@phosphor-icons/react";
 
 const socialLinks = [
-  { icon: GithubLogo, href: "#", label: "GitHub" },
-  { icon: LinkedinLogo, href: "#", label: "LinkedIn" },
-  { icon: TwitterLogo, href: "#", label: "Twitter" },
-  { icon: DribbbleLogo, href: "#", label: "Dribbble" },
+  { icon: YoutubeLogo, href: "https://www.youtube.com/@MegoWorldPH", label: "YouTube" },
+  { icon: TiktokLogo, href: "https://www.tiktok.com/@megoken", label: "TikTok" },
+  { icon: FacebookLogo, href: "https://web.facebook.com/keneth.gepanaga", label: "Facebook" },
 ];
 
 const Contact = () => {
@@ -51,7 +49,7 @@ const Contact = () => {
             className="space-y-8"
           >
             <div className="space-y-4">
-              <h3 className="text-2xl font-bold text-foreground">Get in Touch</h3>
+              <h3 className="text-2xl font-bold text-foreground">My Social Media</h3>
               <p className="text-muted-foreground">
                 Feel free to reach out through any of these platforms. 
                 I'm always open to discussing new projects and opportunities.
@@ -63,6 +61,8 @@ const Contact = () => {
                 <motion.a
                   key={social.label}
                   href={social.href}
+                  target="_blank"
+                  rel="noreferrer"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}

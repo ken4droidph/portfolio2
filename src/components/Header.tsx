@@ -7,8 +7,8 @@ const base = import.meta.env.BASE_URL;
 const navLinks = [
   { label: "About", href: `${base}#about` },
   { label: "Projects", href: `${base}#projects` },
-  { label: "Testimonials123", href: `${base}#testimonials` },
-  { label: "Gallery", href: `${base}#gallery` },
+  { label: "My Resume", href: `${base}#resume` },
+  { label: "Web Design & Function", href: `${base}#gallery` },
   { label: "Contact", href: `${base}#contact` },
 ];
 

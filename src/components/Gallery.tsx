@@ -72,7 +72,7 @@ const Gallery = () => {
           className="text-center mb-16 space-y-4"
         >
           <span className="text-primary font-medium uppercase tracking-widest text-sm">
-            Gallery
+            Web Design & Function
           </span>
           <h2 className="text-4xl md:text-5xl font-bold text-foreground">
             Design <span className="gradient-text">Showcase</span>

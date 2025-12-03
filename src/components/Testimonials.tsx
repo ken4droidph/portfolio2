@@ -38,26 +38,8 @@ const testimonials = [
 ];
 
 const Testimonials = () => {
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const [activeIndex, setActiveIndex] = useState(0);
-
-  const scroll = (direction: "left" | "right") => {
-    if (scrollRef.current) {
-      const scrollAmount = 400;
-      const newScrollLeft =
-        direction === "left"
-          ? scrollRef.current.scrollLeft - scrollAmount
-          : scrollRef.current.scrollLeft + scrollAmount;
-      
-      scrollRef.current.scrollTo({ left: newScrollLeft, behavior: "smooth" });
-      
-      const newIndex = Math.round(newScrollLeft / scrollAmount);
-      setActiveIndex(Math.max(0, Math.min(newIndex, testimonials.length - 1)));
-    }
-  };
-
   return (
-    <section id="testimonials" className="relative py-32 overflow-hidden">
+    <section id="resume" className="relative py-32 overflow-hidden">
       {/* Light Orbs */}
       <div className="accent-orb w-[500px] h-[500px] top-1/2 left-0 -translate-y-1/2 -translate-x-1/2" />
       <div className="light-orb w-72 h-72 bottom-0 right-20" />
@@ -72,100 +54,65 @@ const Testimonials = () => {
           className="text-center mb-16 space-y-4"
         >
           <span className="text-primary font-medium uppercase tracking-widest text-sm">
-            Testimonials
+            My Resume
           </span>
           <h2 className="text-4xl md:text-5xl font-bold text-foreground">
-            What <span className="gradient-text">Clients</span> Say
+            My <span className="gradient-text">Resume</span>
           </h2>
+          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+            View and download my resume to explore my experience, skills, and projects in detail.
+          </p>
         </motion.div>
 
         {/* Slider Container */}
-        <div className="relative">
+        <div className="relative max-w-3xl mx-auto">
           {/* Navigation Buttons */}
-          <motion.button
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            onClick={() => scroll("left")}
-            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 glass rounded-full flex items-center justify-center text-foreground hover:text-primary transition-colors -translate-x-6 hidden md:flex"
-          >
-            <CaretLeft weight="bold" size={24} />
-          </motion.button>
-
-          <motion.button
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            onClick={() => scroll("right")}
-            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 glass rounded-full flex items-center justify-center text-foreground hover:text-primary transition-colors translate-x-6 hidden md:flex"
-          >
-            <CaretRight weight="bold" size={24} />
-          </motion.button>
-
           {/* Cards Container */}
-          <div
-            ref={scrollRef}
-            className="flex gap-6 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-4"
-            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="glass rounded-2xl p-8 md:p-10 space-y-6 md:space-y-0 md:flex md:items-center md:justify-between gap-8"
           >
-            {testimonials.map((testimonial, index) => (
-              <motion.div
-                key={testimonial.id}
-                initial={{ opacity: 0, x: 100 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1, duration: 0.6 }}
-                whileHover={{ y: -10 }}
-                className={`flex-shrink-0 w-[350px] snap-center glass rounded-2xl p-8 space-y-6 transition-all duration-500 ${
-                  activeIndex === index ? "glow-primary" : ""
-                }`}
-              >
-                {/* Stars */}
-                <div className="flex gap-1">
-                  {[...Array(testimonial.rating)].map((_, i) => (
-                    <Star key={i} weight="fill" className="text-primary" size={20} />
-                  ))}
-                </div>
+            <div className="space-y-4 md:max-w-md text-left md:text-left">
+              <h3 className="text-2xl font-bold text-foreground">Download My Resume</h3>
+              <p className="text-muted-foreground">
+                I've put together my background, skills, and professional experience into a concise
+                resume. Feel free to view it online or download a copy.
+              </p>
+            </div>
 
-                {/* Review */}
-                <p className="text-muted-foreground leading-relaxed">
-                  "{testimonial.review}"
-                </p>
+            <div className="flex flex-col gap-4 md:w-[360px] lg:w-[420px]">
+              <div className="flex flex-col sm:flex-row gap-3 md:gap-4">
+                <a
+                  href={new URL("./file/resume.pdf", import.meta.url).href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center justify-center px-6 py-3 rounded-full bg-primary text-primary-foreground font-semibold glow-primary hover:glow-primary-intense transition-all duration-300"
+                >
+                  Open Resume
+                </a>
+                <a
+                  href={new URL("./file/resume.pdf", import.meta.url).href}
+                  download
+                  className="inline-flex items-center justify-center px-6 py-3 rounded-full border border-primary/60 text-primary font-semibold hover:bg-primary/10 transition-all duration-300"
+                >
+                  Download PDF
+                </a>
+              </div>
 
-                {/* Author */}
-                <div className="flex items-center gap-4">
-                  <img
-                    src={testimonial.image}
-                    alt={testimonial.name}
-                    className="w-14 h-14 rounded-full object-cover border-2 border-primary/30"
-                  />
-                  <div>
-                    <h4 className="font-semibold text-foreground">{testimonial.name}</h4>
-                    <p className="text-sm text-muted-foreground">{testimonial.title}</p>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+              <div className="rounded-xl overflow-hidden border border-border/60 bg-background/80 h-64 md:h-80 lg:h-96">
+                <iframe
+                  src={new URL("./file/resume.pdf", import.meta.url).href}
+                  title="Keneth Resume Preview"
+                  className="w-full h-full"
+                />
+              </div>
+            </div>
+          </motion.div>
 
           {/* Dots Indicator */}
-          <div className="flex justify-center gap-2 mt-8">
-            {testimonials.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => {
-                  scrollRef.current?.scrollTo({
-                    left: index * 400,
-                    behavior: "smooth",
-                  });
-                  setActiveIndex(index);
-                }}
-                className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                  activeIndex === index
-                    ? "w-8 bg-primary"
-                    : "bg-muted-foreground/30 hover:bg-muted-foreground/50"
-                }`}
-              />
-            ))}
-          </div>
         </div>
       </div>
     </section>
