@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Redirecting...</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script>
+      // GitHub Pages SPA fallback: redirect all paths back to the main index
+      // while preserving the path for React Router.
+      (function () {
+        var l = window.location;
+        var base = '/portfolio2'; // GitHub Pages repo base path
+        // If we're not already at the SPA entry, rebuild URL to index with original path as hash
+        if (!l.pathname.startsWith(base + '/index.html') && !l.pathname.endsWith('/index.html')) {
+          var path = l.pathname.replace(base, '');
+          var newUrl = base + '/index.html#' + path + l.search;
+          l.replace(newUrl);
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <p>Redirecting...</p>
+  </body>
+</html>

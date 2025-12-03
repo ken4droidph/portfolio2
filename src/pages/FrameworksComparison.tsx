@@ -2,7 +2,8 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
 const FrameworksComparison = () => {
-  const src = `${import.meta.env.BASE_URL}src/components/file/2.html`;
+  // Use the built static copy in public/frameworks-comparison/index.html
+  const src = `${import.meta.env.BASE_URL}frameworks-comparison/index.html`;
 
   return (
     <div className="min-h-screen bg-background overflow-x-hidden">
