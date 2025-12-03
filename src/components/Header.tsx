@@ -49,7 +49,7 @@ const Header = () => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            K.
+            KENETH.DEV
           </motion.a>
 
           <nav className="hidden md:flex items-center gap-8">

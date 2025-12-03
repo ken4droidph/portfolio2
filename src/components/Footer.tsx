@@ -22,7 +22,7 @@ const Footer = () => {
             whileHover={{ scale: 1.05 }}
             className="text-3xl font-bold gradient-text"
           >
-            K.
+            Keneth Gepanaga
           </motion.a>
 
           {/* Links */}
