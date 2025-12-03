@@ -2,11 +2,14 @@ import { motion } from "framer-motion";
 import { Heart } from "@phosphor-icons/react";
 import signatureImage from "./images/signature.png";
 
+const base = import.meta.env.BASE_URL;
+
 const footerLinks = [
-  { label: "About", href: "#about" },
-  { label: "Projects", href: "#projects" },
-  { label: "My Resume", href: "#resume" },
-  { label: "Contact", href: "#contact" },
+  { label: "About", href: `${base}#about` },
+  { label: "Projects", href: `${base}#projects` },
+  { label: "My Resume", href: `${base}#resume` },
+  { label: "Web Design & Function", href: `${base}#gallery` },
+  { label: "Contact", href: `${base}#contact` },
 ];
 
 const Footer = () => {
@@ -17,21 +20,9 @@ const Footer = () => {
 
       <div className="container mx-auto px-6">
         <div className="flex flex-col md:flex-row items-center justify-between gap-8">
-          {/* Mobile: signature + links in a single row */}
-          <div className="flex flex-nowrap items-center justify-center gap-3 md:hidden">
-            <motion.a
-              href="#"
-              whileHover={{ scale: 1.05 }}
-              className="inline-flex items-center flex-shrink-0"
-            >
-              <img
-                src={signatureImage}
-                alt="Keneth Gepanaga signature"
-                className="h-10 w-auto"
-              />
-            </motion.a>
-
-            <nav className="flex flex-nowrap items-center gap-4 text-xs">
+          {/* Mobile: links row */}
+          <div className="flex flex-wrap items-center justify-center gap-3 md:hidden">
+            <nav className="flex flex-wrap items-center justify-center gap-4 text-xs">
               {footerLinks.map((link) => (
                 <motion.a
                   key={link.label}
@@ -73,9 +64,16 @@ const Footer = () => {
           </nav>
 
           {/* Copyright */}
-          <p className="text-muted-foreground text-sm flex items-center gap-2">
-            Made with <Heart weight="fill" className="text-primary" size={16} /> by: Ken & AI
-          </p>
+          <div className="text-muted-foreground text-sm flex items-center gap-2 flex-wrap justify-center md:justify-end">
+            <img
+              src={signatureImage}
+              alt="Keneth Gepanaga signature"
+              className="h-8 w-auto md:hidden"
+            />
+            <span className="flex items-center gap-2">
+              Made with <Heart weight="fill" className="text-primary" size={16} /> by: Ken & AI
+            </span>
+          </div>
         </div>
 
         <div className="mt-8 pt-8 border-t border-border/20 text-center">

@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { X, ArrowsOut } from "@phosphor-icons/react";
+import { X, ArrowsOut, ArrowRight } from "@phosphor-icons/react";
+import { useNavigate } from "react-router-dom";
 
 const galleryItems = [
   {
@@ -53,8 +54,13 @@ const galleryItems = [
   },
 ];
 
-const Gallery = () => {
+type GalleryProps = {
+  showViewAllButton?: boolean;
+};
+
+const Gallery = ({ showViewAllButton = true }: GalleryProps) => {
   const [selectedImage, setSelectedImage] = useState<typeof galleryItems[0] | null>(null);
+  const navigate = useNavigate();
 
   return (
     <section id="gallery" className="relative py-32 overflow-hidden">
@@ -124,6 +130,21 @@ const Gallery = () => {
             ))}
           </motion.div>
         </div>
+
+        {showViewAllButton && (
+          <div className="mt-10 flex justify-center">
+            <motion.button
+              type="button"
+              onClick={() => navigate("/projects/allproject")}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-primary text-primary-foreground font-semibold glow-primary hover:glow-primary-intense transition-all duration-300"
+            >
+              View All Function & Design
+              <ArrowRight weight="bold" size={20} />
+            </motion.button>
+          </div>
+        )}
       </div>
 
       {/* Fullscreen Modal */}
