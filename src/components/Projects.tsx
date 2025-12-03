@@ -1,6 +1,21 @@
 import { motion } from "framer-motion";
 import { ArrowRight } from "@phosphor-icons/react";
 import { useNavigate } from "react-router-dom";
+import img1 from "./images/1.jpg";
+import img2 from "./images/2.jpg";
+
+const tagIcons: Record<string, string> = {
+  Html: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg",
+  Css: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg",
+  Javascript: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
+  AI: "https://openai.com/favicon.ico",
+  React: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
+  AngularJS: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg",
+  Vue: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg",
+  jQuery: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jquery/jquery-original.svg",
+  AlpineJS: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/alpinejs/alpinejs-original.svg",
+  D3js: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/d3js/d3js-original.svg",
+};
 
 export const projects = [
   {
@@ -15,22 +30,20 @@ export const projects = [
   },
   {
     id: 2,
-    title: "CryptoVerse",
+    title: "JS NAME ANIMATION",
     description:
-      "A next-gen cryptocurrency trading platform featuring live market data, portfolio tracking, and AI-powered insights.",
-    image:
-      "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=800&h=600&fit=crop",
-    tags: ["Next.js", "Web3", "Tailwind", "Framer"],
+      "On this page, there is a name, and you can add additional names as well that gets struck by lightning and small electric sparks. It also absorbs tiny animated dust particles, causing it to grow significantly in size. After 30 seconds, it ‘explodes’ and resets, creating a continuous and visually striking animation effect.",
+    image: img1,
+    tags: ["Html", "Css", "Javascript", "AI"],
     link: "#",
   },
   {
     id: 3,
-    title: "MetaSpace VR",
+    title: "Frameworks & Libraries Function Comparison",
     description:
-      "Virtual reality experience platform enabling users to create and explore immersive 3D environments together.",
-    image:
-      "https://images.unsplash.com/photo-1617802690992-15d93263d3a9?w=800&h=600&fit=crop",
-    tags: ["Spline", "React", "WebGL", "Socket.io"],
+      "On this page, you can see various functions in JavaScript, including JavaScript, React, AngularJS, Vue, jQuery, AlpineJS, and D3.js.",
+    image: img2,
+    tags: ["Html", "Css", "Javascript", "React", "AngularJS", "Vue", "jQuery", "AlpineJS", "D3.js"],
     link: "#",
   },
   {
@@ -106,7 +119,25 @@ const Projects = () => {
                 {/* Content */}
                 <div className={`space-y-6 ${originalIndex % 2 === 1 ? "lg:order-1 lg:text-right" : ""}`}>
                   <h3 className="text-3xl md:text-4xl font-bold text-foreground">
-                    {project.title}
+                    {project.title === "JS NAME ANIMATION" ? (
+                      <button
+                        type="button"
+                        onClick={() => navigate("/js-name-animation")}
+                        className="hover:text-primary transition-colors duration-300 bg-transparent"
+                      >
+                        {project.title}
+                      </button>
+                    ) : project.title === "Frameworks & Libraries Function Comparison" ? (
+                      <button
+                        type="button"
+                        onClick={() => navigate("/frameworks-comparison")}
+                        className="hover:text-primary transition-colors duration-300 bg-transparent"
+                      >
+                        {project.title}
+                      </button>
+                    ) : (
+                      project.title
+                    )}
                   </h3>
 
                   <p className="text-muted-foreground text-lg leading-relaxed">
@@ -118,8 +149,13 @@ const Projects = () => {
                     {project.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="glass px-4 py-2 rounded-full text-sm font-medium text-foreground"
+                        className="glass px-3 py-2 rounded-full text-sm font-medium text-foreground inline-flex items-center gap-2"
                       >
+                        <img
+                          src={tagIcons[tag] || "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/devicon/devicon-original.svg"}
+                          alt={tag}
+                          className="w-4 h-4"
+                        />
                         {tag}
                       </span>
                     ))}

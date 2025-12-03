@@ -2,55 +2,42 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { X, ArrowsOut, ArrowRight } from "@phosphor-icons/react";
 import { useNavigate } from "react-router-dom";
+import img1 from "./images/1.jpg";
+import img2 from "./images/2.jpg";
+import img3 from "./images/3.jpg";
+import img4 from "./images/4.jpg";
+import img5 from "./images/5.jpg";
 
 const galleryItems = [
   {
     id: 1,
-    title: "3D Product Render",
-    image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&h=400&fit=crop",
-    category: "3D Design",
+    title: "Web Design 1",
+    image: img1,
+    category: "Web Design",
   },
   {
     id: 2,
-    title: "Mobile App UI",
-    image: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=600&h=400&fit=crop",
-    category: "UI Design",
+    title: "Web Design 2",
+    image: img2,
+    category: "Web Design",
   },
   {
     id: 3,
-    title: "Brand Identity",
-    image: "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=600&h=400&fit=crop",
-    category: "Branding",
+    title: "Web Design 3",
+    image: img3,
+    category: "Web Design",
   },
   {
     id: 4,
-    title: "Dashboard Design",
-    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop",
+    title: "Web Design 4",
+    image: img4,
     category: "Web Design",
   },
   {
     id: 5,
-    title: "Motion Graphics",
-    image: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&h=400&fit=crop",
-    category: "Animation",
-  },
-  {
-    id: 6,
-    title: "Icon System",
-    image: "https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=600&h=400&fit=crop",
-    category: "Icon Design",
-  },
-  {
-    id: 7,
-    title: "E-commerce Design",
-    image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=400&fit=crop",
+    title: "Web Design 5",
+    image: img5,
     category: "Web Design",
-  },
-  {
-    id: 8,
-    title: "Logo Design",
-    image: "https://images.unsplash.com/photo-1626785774573-4b799315345d?w=600&h=400&fit=crop",
-    category: "Branding",
   },
 ];
 

@@ -71,7 +71,7 @@ const Hero = () => {
       </motion.div>
 
       <div className="absolute bottom-6 right-6 z-20 inline-flex items-center justify-center px-3 py-2 rounded-full bg-primary text-primary-foreground text-[8px] md:text-[9px] font-semibold tracking-[0.15em] uppercase w-[144px] -mr-px">
-        Made By: Keneth & AI + Spline 
+        Made By: Ken & AI + Spline 
       </div>
     </section>
   );

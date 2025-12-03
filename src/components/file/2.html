@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Frameworks & Libraries Comparison</title>
+
+  <!-- React -->
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <!-- AngularJS -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+
+  <!-- Vue -->
+  <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.js"></script>
+
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <!-- Alpine.js -->
+  <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+
+  <!-- D3.js -->
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+
+  <style>
+    body { font-family: Arial; margin:0; padding:0; }
+    h1 { text-align:center; margin:20px 0; }
+    .container { display:flex; flex-wrap:wrap; gap:20px; justify-content:center; margin:20px; }
+    .box { flex: 1 1 300px; padding:15px; border-radius:8px; min-width:300px; max-width:400px; box-sizing:border-box; color:#333; }
+    .react { background:#f0f8ff; border:2px solid #1e90ff; }
+    .angular { background:#fff0f5; border:2px solid #ff1493; }
+    .vue { background:#f5fff0; border:2px solid #32cd32; }
+    .jquery { background:#fff8dc; border:2px solid #daa520; }
+    .alpine { background:#f0fff0; border:2px solid #008000; }
+    .d3 { background:#f0f0f0; border:2px solid #555; }
+    button,input { padding:5px; margin:5px 0; width:100%; font-size:14px; }
+    ul { padding-left:20px; }
+    svg { width:100%; height:150px; }
+  </style>
+</head>
+<body>
+
+<h1>Frameworks & Libraries Comparison</h1>
+
+<div class="container">
+  <!-- React -->
+  <div class="box react" id="react-root"></div>
+
+  <!-- AngularJS -->
+  <div class="box angular" ng-app="angularApp" ng-controller="AngularFormController">
+    <h2>AngularJS: Live Form Validation</h2>
+    <form name="myForm" novalidate>
+      <input type="text" name="username" ng-model="username" ng-minlength="3" required placeholder="Enter name"/>
+      <p style="color:red" ng-show="myForm.username.$touched && myForm.username.$error.required">Required!</p>
+      <p style="color:red" ng-show="myForm.username.$touched && myForm.username.$error.minlength">At least 3 chars!</p>
+      <p style="color:green" ng-show="myForm.username.$valid">Valid: {{ username }}</p>
+    </form>
+  </div>
+
+  <!-- Vue -->
+  <div class="box vue" id="vue-root">
+    <h2>Vue: Reactive Filtered List</h2>
+    <input v-model="search" placeholder="Filter fruits..."/>
+    <ul>
+      <li v-for="fruit in filteredFruits" :key="fruit">{{ fruit }}</li>
+    </ul>
+  </div>
+
+  <!-- jQuery -->
+  <div class="box jquery">
+    <h2>jQuery: DOM Update</h2>
+    <input id="jq-input" placeholder="Type something..."/>
+    <p>Preview: <span id="jq-output"></span></p>
+  </div>
+
+  <!-- Alpine.js -->
+  <div class="box alpine" x-data="{ count:0 }">
+    <h2>Alpine.js: Counter</h2>
+    <p>Count: <span x-text="count"></span></p>
+    <button @click="count++">Increment</button>
+    <button @click="count--">Decrement</button>
+  </div>
+
+  <!-- D3.js -->
+  <div class="box d3" id="d3-box">
+    <h2>D3.js: Simple Bar Chart</h2>
+    <svg></svg>
+    <div id="buttons-container" style="margin-top:10px;"></div>
+  </div>
+</div>
+
+<!-- React Script -->
+<script type="text/babel">
+function ReactFeature() {
+  const [count,setCount] = React.useState(0);
+  const [items,setItems] = React.useState(["Apple","Banana","Cherry"]);
+  return (
+    <div>
+      <h2>React: Counter + List</h2>
+      <p>Count: {count}</p>
+      <button onClick={()=>setCount(count+1)}>Increment</button>
+      <button onClick={()=>setCount(count-1)}>Decrement</button>
+      <h3>Items:</h3>
+      <ul>{items.map((item,i)=><li key={i}>{item}</li>)}</ul>
+      <button onClick={()=>setItems([...items,"New Item "+(items.length+1)])}>Add Item</button>
+    </div>
+  );
+}
+const reactRoot = ReactDOM.createRoot(document.getElementById('react-root'));
+reactRoot.render(<ReactFeature />);
+</script>
+
+<!-- AngularJS Script -->
+<script>
+var angularApp = angular.module('angularApp', []);
+angularApp.controller('AngularFormController', function($scope){
+  $scope.username = "";
+});
+</script>
+
+<!-- Vue Script -->
+<script>
+const vueApp = Vue.createApp({
+  data(){ return { search:"", fruits:["Apple","Banana","Cherry","Mango","Orange","manok","isda"] } },
+  computed:{ filteredFruits(){ return this.fruits.filter(f=>f.toLowerCase().includes(this.search.toLowerCase())); } }
+});
+vueApp.mount('#vue-root');
+</script>
+
+<!-- jQuery Script -->
+<script>
+$('#jq-input').on('input', function(){
+  $('#jq-output').text($(this).val());
+});
+</script>
+
+<!-- D3.js Script -->
+<script>
+let data = [100, 80, 45, 60, 20];
+const labels = ["A","B","C","D","E"];
+const svg = d3.select("#d3-box svg");
+const width = svg.node().getBoundingClientRect().width;
+const barHeight = 25;
+
+// Function to render bars
+function renderBars() {
+  svg.selectAll("*").remove(); // clear previous
+
+  svg.selectAll("rect")
+    .data(data)
+    .enter()
+    .append("rect")
+    .attr("width", d=>d*2)
+    .attr("height", barHeight-5)
+    .attr("y",(d,i)=>i*barHeight)
+    .attr("fill","#69b3a2");
+
+  svg.selectAll("text")
+    .data(data)
+    .enter()
+    .append("text")
+    .attr("x", d=>d*2 + 5)
+    .attr("y",(d,i)=>i*barHeight + 17)
+    .text((d,i)=>labels[i] + ": " + d);
+}
+
+// Initial render
+renderBars();
+
+// Add buttons A-E
+const buttonContainer = d3.select("#buttons-container");
+buttonContainer.selectAll("button")
+  .data(labels)
+  .enter()
+  .append("button")
+  .text(d=>d)
+  .on("click", (event,d)=>{
+    const index = labels.indexOf(d);
+    data[index] += 10; // increase bar
+    renderBars();
+  });
+</script>
+
+</body>
+</html>
