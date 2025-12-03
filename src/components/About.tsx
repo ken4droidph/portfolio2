@@ -2,6 +2,8 @@ import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
 import mainImage from "./images/main.png";
+import readdyImage from "./images/readdy.png";
+import capcutImage from "./images/capcut.png";
 
 const skills = [
   { name: "HTML", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" },
@@ -11,8 +13,20 @@ const skills = [
   { name: "MySQL", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" },
   { name: "Shopify Liquid", icon: "https://cdn.simpleicons.org/shopify/7AB55C" },
   { name: "WordPress", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/wordpress/wordpress-plain.svg" },
+  { name: "Readdy Ai", icon: readdyImage },
   { name: "Lovable", icon: "https://lovable.dev/favicon.ico" },
   { name: "Windsurf", icon: "https://codeium.com/favicon.ico" },
+  { name: "Cursor AI", icon: "https://www.cursor.com/favicon.ico" },
+  { name: "Supabase", icon: "https://cdn.simpleicons.org/supabase/3ECF8E" },
+  { name: "Figma", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" },
+  { name: "ChatGPT", icon: "https://cdn.simpleicons.org/openai/412991" },
+  { name: "Gemini", icon: "https://cdn.simpleicons.org/googlegemini/8E24AA" },
+  { name: "Veo 3", icon: "https://cdn.simpleicons.org/google/4285F4" },
+  { name: "CapCut", icon: capcutImage },
+  { name: "Filmora", icon: "https://cdn.simpleicons.org/wondersharefilmora/07273D" },
+  { name: "Photoshop", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/photoshop/photoshop-plain.svg" },
+  { name: "YouTube", icon: "https://cdn.simpleicons.org/youtube/FF0000" },
+  { name: "Google Ads", icon: "https://cdn.simpleicons.org/googleads/4285F4" },
 ];
 
 const About = () => {
@@ -85,16 +99,11 @@ const About = () => {
             </div>
 
             <p className="text-muted-foreground text-lg leading-relaxed">
-              A passionate developer crafting immersive digital experiences that blend 
-              cutting-edge technology with stunning visual design. I specialize in building 
-              interactive 3D web applications that push the boundaries of what's possible 
-              on the web.
+             I combine strong programming skills with AI tools to build interactive and modern web applications. With the help of AI, I can quickly identify and fix problems and bugs, making development faster and more efficient. I also have experience in video and photo editing, as well as content creation, to enhance digital projects.
             </p>
 
             <p className="text-muted-foreground leading-relaxed">
-              From concept to deployment, I bring ideas to life with clean code, 
-              smooth animations, and attention to every pixel. Let's create something 
-              extraordinary together.
+            I specialize in full-stack development, responsive websites, UI/UX design, API integration, and performance optimization. From concept to deployment, I ensure every project is clean, efficient, and delivers a smooth user experience.
             </p>
 
             {/* Skills */}

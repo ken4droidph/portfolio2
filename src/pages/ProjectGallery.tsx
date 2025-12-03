@@ -7,7 +7,8 @@ import { Link, useParams } from "react-router-dom";
 
 const ProjectGallery = () => {
   const { id } = useParams();
-  const project = projects.find((p) => String(p.id) === id) ?? projects[0];
+  const effectiveId = id === "allproject" ? "2" : id;
+  const project = projects.find((p) => String(p.id) === effectiveId) ?? projects[0];
 
   return (
     <div className="min-h-screen bg-background overflow-x-hidden">

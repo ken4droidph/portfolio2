@@ -41,7 +41,7 @@ const Footer = () => {
 
           {/* Copyright */}
           <p className="text-muted-foreground text-sm flex items-center gap-2">
-            Made with <Heart weight="fill" className="text-primary" size={16} /> by Keneth
+            Made with <Heart weight="fill" className="text-primary" size={16} /> by: Keneth & AI
           </p>
         </div>
 

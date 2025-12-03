@@ -47,7 +47,8 @@ const Header = () => {
         <div className="container mx-auto px-6 flex items-center justify-between">
           <motion.a
             href={base}
-            className="text-2xl font-bold gradient-text"
+            className="text-3xl font-bold gradient-text"
+            style={{ fontFamily: '"Saira Stencil One", system-ui, sans-serif' }}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
