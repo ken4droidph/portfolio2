@@ -11,15 +11,15 @@ import img5 from "./images/5.jpg";
 const galleryItems = [
   {
     id: 1,
-    title: "Web Design 1",
+    title: "JS NAME ANIMATION",
     image: img1,
-    category: "Web Design",
+    category: "",
   },
   {
     id: 2,
-    title: "Web Design 2",
+    title: "Frameworks & Libraries Function Comparison",
     image: img2,
-    category: "Web Design",
+    category: "",
   },
   {
     id: 3,
@@ -127,7 +127,7 @@ const Gallery = ({ showViewAllButton = true }: GalleryProps) => {
               whileTap={{ scale: 0.95 }}
               className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-primary text-primary-foreground font-semibold glow-primary hover:glow-primary-intense transition-all duration-300"
             >
-              View All Function & Design
+              View All Function & Web Design
               <ArrowRight weight="bold" size={20} />
             </motion.button>
           </div>
