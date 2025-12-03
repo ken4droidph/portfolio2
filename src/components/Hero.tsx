@@ -69,6 +69,10 @@ const Hero = () => {
           <div className="w-1 h-2 bg-primary rounded-full" />
         </motion.div>
       </motion.div>
+
+      <div className="absolute bottom-6 right-6 z-20 inline-flex items-center px-4 py-2 rounded-full bg-primary text-primary-foreground text-[10px] md:text-xs font-semibold tracking-[0.3em] uppercase">
+        Front-End Developer
+      </div>
     </section>
   );
 };
