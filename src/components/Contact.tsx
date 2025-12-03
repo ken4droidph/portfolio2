@@ -27,9 +27,6 @@ const Contact = () => {
           transition={{ duration: 0.8 }}
           className="text-center mb-16 space-y-4"
         >
-          <span className="text-primary font-medium uppercase tracking-widest text-sm">
-            Contact
-          </span>
           <h2 className="text-4xl md:text-5xl font-bold text-foreground">
             Let's <span className="gradient-text">Connect</span>
           </h2>

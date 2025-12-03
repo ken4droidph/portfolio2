@@ -71,11 +71,8 @@ const Gallery = () => {
           transition={{ duration: 0.8 }}
           className="text-center mb-16 space-y-4"
         >
-          <span className="text-primary font-medium uppercase tracking-widest text-sm">
-            Web Design & Function
-          </span>
           <h2 className="text-4xl md:text-5xl font-bold text-foreground">
-            Design <span className="gradient-text">Showcase</span>
+            Web Design &<span className="gradient-text"> Function</span>
           </h2>
         </motion.div>
 

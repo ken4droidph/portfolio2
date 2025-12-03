@@ -55,9 +55,6 @@ const Projects = () => {
           transition={{ duration: 0.8 }}
           className="text-center mb-20 space-y-4"
         >
-          <span className="text-primary font-medium uppercase tracking-widest text-sm">
-            Portfolio
-          </span>
           <h2 className="text-4xl md:text-5xl font-bold text-foreground">
             Featured <span className="gradient-text">Projects</span>
           </h2>
