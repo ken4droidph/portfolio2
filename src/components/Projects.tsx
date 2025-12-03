@@ -1,7 +1,8 @@
 import { motion } from "framer-motion";
 import { ArrowRight } from "@phosphor-icons/react";
+import { useNavigate } from "react-router-dom";
 
-const projects = [
+export const projects = [
   {
     id: 1,
     title: "Nebula Dashboard",
@@ -37,6 +38,8 @@ const projects = [
 ];
 
 const Projects = () => {
+  const navigate = useNavigate();
+
   return (
     <section id="projects" className="relative py-32 overflow-hidden">
       {/* Light Orbs */}
@@ -123,8 +126,9 @@ const Projects = () => {
                 </div>
 
                 {/* Button */}
-                <motion.a
-                  href={project.link}
+                <motion.button
+                  type="button"
+                  onClick={() => navigate(`/projects/${project.id}`)}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   className={`inline-flex items-center gap-3 px-8 py-4 rounded-full bg-primary text-primary-foreground font-semibold glow-primary hover:glow-primary-intense transition-all duration-300 ${
@@ -133,7 +137,7 @@ const Projects = () => {
                 >
                   View Project
                   <ArrowRight weight="bold" size={20} />
-                </motion.a>
+                </motion.button>
               </div>
             </motion.div>
           ))}

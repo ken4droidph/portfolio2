@@ -57,7 +57,7 @@ const About = () => {
                 transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
                 className="absolute -bottom-4 -right-4 glass px-4 py-2 rounded-full"
               >
-                <span className="text-primary font-semibold">5+ Years Exp</span>
+                <span className="text-primary font-semibold">1+ Years Exp</span>
               </motion.div>
             </motion.div>
           </motion.div>
@@ -99,7 +99,7 @@ const About = () => {
 
             {/* Skills */}
             <div className="space-y-4">
-              <h3 className="text-foreground font-semibold">Tech Stack</h3>
+              <h3 className="text-foreground font-semibold">SKill & Knowledge</h3>
               <div className="flex flex-wrap gap-4">
                 {skills.map((skill, index) => (
                   <motion.div

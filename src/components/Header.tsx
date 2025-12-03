@@ -2,12 +2,14 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { List, X } from "@phosphor-icons/react";
 
+const base = import.meta.env.BASE_URL;
+
 const navLinks = [
-  { label: "About", href: "#about" },
-  { label: "Projects", href: "#projects" },
-  { label: "Testimonials", href: "#testimonials" },
-  { label: "Gallery", href: "#gallery" },
-  { label: "Contact", href: "#contact" },
+  { label: "About", href: `${base}#about` },
+  { label: "Projects", href: `${base}#projects` },
+  { label: "Testimonials123", href: `${base}#testimonials` },
+  { label: "Gallery", href: `${base}#gallery` },
+  { label: "Contact", href: `${base}#contact` },
 ];
 
 const Header = () => {
@@ -44,7 +46,7 @@ const Header = () => {
       >
         <div className="container mx-auto px-6 flex items-center justify-between">
           <motion.a
-            href="#"
+            href={base}
             className="text-2xl font-bold gradient-text"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -69,7 +71,7 @@ const Header = () => {
           </nav>
 
           <motion.a
-            href="#contact"
+            href={`${base}#contact`}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             className="hidden md:block px-6 py-2.5 rounded-full bg-primary text-primary-foreground font-medium text-sm glow-primary hover:glow-primary-intense transition-all duration-300"
@@ -131,7 +133,7 @@ const Header = () => {
               ))}
               
               <motion.a
-                href="#contact"
+                href={`${base}#contact`}
                 onClick={closeMobileMenu}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}

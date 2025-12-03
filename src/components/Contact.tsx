@@ -1,11 +1,9 @@
 import { motion } from "framer-motion";
-import { useState } from "react";
-import { 
-  GithubLogo, 
-  LinkedinLogo, 
-  TwitterLogo, 
+import {
+  GithubLogo,
+  LinkedinLogo,
+  TwitterLogo,
   DribbbleLogo,
-  PaperPlaneTilt 
 } from "@phosphor-icons/react";
 
 const socialLinks = [
@@ -16,14 +14,6 @@ const socialLinks = [
 ];
 
 const Contact = () => {
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setTimeout(() => setIsSubmitting(false), 2000);
-  };
-
   return (
     <section id="contact" className="relative py-32 overflow-hidden">
       {/* Light Orbs */}
@@ -89,95 +79,15 @@ const Contact = () => {
 
             <div className="space-y-4">
               <div className="glass rounded-xl p-6 space-y-2">
-                <span className="text-muted-foreground text-sm">Email</span>
-                <p className="text-foreground font-medium">hello@keneth.dev</p>
+                <span className="text-muted-foreground text-sm">Email:</span>
+                <p className="text-foreground font-medium">ken4droidph@gmail.com</p>
               </div>
               <div className="glass rounded-xl p-6 space-y-2">
-                <span className="text-muted-foreground text-sm">Location</span>
-                <p className="text-foreground font-medium">San Francisco, CA</p>
+                <span className="text-muted-foreground text-sm">Location:</span>
+                <p className="text-foreground font-medium">Alijis, Bacolod City, Negros Occidental, Philippines</p>
               </div>
             </div>
           </motion.div>
-
-          {/* Contact Form */}
-          <motion.form
-            onSubmit={handleSubmit}
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="glass-intense rounded-2xl p-8 space-y-6"
-          >
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.3 }}
-            >
-              <label className="block text-sm font-medium text-foreground mb-2">
-                Name
-              </label>
-              <input
-                type="text"
-                required
-                className="w-full bg-muted/50 border border-border rounded-xl px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all duration-300"
-                placeholder="Your name"
-              />
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.4 }}
-            >
-              <label className="block text-sm font-medium text-foreground mb-2">
-                Email
-              </label>
-              <input
-                type="email"
-                required
-                className="w-full bg-muted/50 border border-border rounded-xl px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all duration-300"
-                placeholder="your@email.com"
-              />
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.5 }}
-            >
-              <label className="block text-sm font-medium text-foreground mb-2">
-                Message
-              </label>
-              <textarea
-                required
-                rows={5}
-                className="w-full bg-muted/50 border border-border rounded-xl px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all duration-300 resize-none"
-                placeholder="Tell me about your project..."
-              />
-            </motion.div>
-
-            <motion.button
-              type="submit"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              disabled={isSubmitting}
-              className={`w-full py-4 rounded-xl bg-primary text-primary-foreground font-semibold flex items-center justify-center gap-3 transition-all duration-300 ${
-                isSubmitting ? "animate-glow-pulse" : "glow-primary hover:glow-primary-intense"
-              }`}
-            >
-              {isSubmitting ? (
-                "Sending..."
-              ) : (
-                <>
-                  Send Message
-                  <PaperPlaneTilt weight="fill" size={20} />
-                </>
-              )}
-            </motion.button>
-          </motion.form>
         </div>
       </div>
     </section>

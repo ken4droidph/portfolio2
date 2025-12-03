@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { X, ArrowsOut, CaretLeft, CaretRight } from "@phosphor-icons/react";
+import { X, ArrowsOut } from "@phosphor-icons/react";
 
 const galleryItems = [
   {
@@ -55,22 +55,6 @@ const galleryItems = [
 
 const Gallery = () => {
   const [selectedImage, setSelectedImage] = useState<typeof galleryItems[0] | null>(null);
-  const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 4;
-  const totalPages = Math.ceil(galleryItems.length / itemsPerPage);
-
-  const currentItems = galleryItems.slice(
-    currentPage * itemsPerPage,
-    (currentPage + 1) * itemsPerPage
-  );
-
-  const nextPage = () => {
-    setCurrentPage((prev) => (prev + 1) % totalPages);
-  };
-
-  const prevPage = () => {
-    setCurrentPage((prev) => (prev - 1 + totalPages) % totalPages);
-  };
 
   return (
     <section id="gallery" className="relative py-32 overflow-hidden">
@@ -98,20 +82,19 @@ const Gallery = () => {
         {/* 4-Image Grid (2x2) */}
         <div className="relative">
           <motion.div
-            key={currentPage}
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -50 }}
-            transition={{ duration: 0.5 }}
-            className="grid grid-cols-2 gap-4 md:gap-6"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.6 }}
+            className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6"
           >
-            {currentItems.map((item, index) => (
+            {galleryItems.map((item, index) => (
               <motion.div
                 key={item.id}
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: index * 0.1, duration: 0.6 }}
+                transition={{ delay: index * 0.05, duration: 0.5 }}
                 whileHover={{ y: -10 }}
                 className="relative group"
               >
@@ -143,40 +126,6 @@ const Gallery = () => {
               </motion.div>
             ))}
           </motion.div>
-
-          {/* Navigation Arrows */}
-          <motion.button
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            onClick={prevPage}
-            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-6 w-10 h-10 md:w-12 md:h-12 glass rounded-full flex items-center justify-center text-foreground hover:text-primary transition-colors z-10"
-          >
-            <CaretLeft weight="bold" className="w-5 h-5 md:w-6 md:h-6" />
-          </motion.button>
-
-          <motion.button
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            onClick={nextPage}
-            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-6 w-10 h-10 md:w-12 md:h-12 glass rounded-full flex items-center justify-center text-foreground hover:text-primary transition-colors z-10"
-          >
-            <CaretRight weight="bold" className="w-5 h-5 md:w-6 md:h-6" />
-          </motion.button>
-        </div>
-
-        {/* Page Indicators */}
-        <div className="flex justify-center gap-2 mt-8">
-          {Array.from({ length: totalPages }).map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentPage(index)}
-              className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                index === currentPage
-                  ? "w-8 bg-primary"
-                  : "bg-muted-foreground/30 hover:bg-muted-foreground/50"
-              }`}
-            />
-          ))}
         </div>
       </div>
 
