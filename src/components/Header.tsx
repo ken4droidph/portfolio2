@@ -52,7 +52,7 @@ const Header = () => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            KENETH.DEV
+            KEN & AI
           </motion.a>
 
           <nav className="hidden md:flex items-center gap-8">
@@ -63,7 +63,7 @@ const Header = () => {
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 * index, duration: 0.5 }}
-                className="text-muted-foreground hover:text-foreground transition-colors duration-300 text-sm font-medium relative group"
+                className="text-foreground/80 hover:text-primary transition-colors duration-300 text-sm md:text-base font-semibold relative group"
               >
                 {link.label}
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
@@ -83,7 +83,7 @@ const Header = () => {
           {/* Mobile Menu Button */}
           <button 
             onClick={toggleMobileMenu}
-            className="md:hidden text-foreground p-2 relative z-50"
+            className="md:hidden text-primary p-2 relative z-50"
             aria-label="Toggle menu"
           >
             {mobileMenuOpen ? (
@@ -127,7 +127,7 @@ const Header = () => {
                   initial={{ opacity: 0, x: 50 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.1 * index, duration: 0.3 }}
-                  className="text-2xl font-medium text-muted-foreground hover:text-primary transition-colors duration-300"
+                  className="text-2xl font-semibold text-foreground hover:text-primary transition-colors duration-300"
                 >
                   {link.label}
                 </motion.a>

@@ -16,10 +16,10 @@ const skills = [
   { name: "Readdy Ai", icon: readdyImage },
   { name: "Lovable", icon: "https://lovable.dev/favicon.ico" },
   { name: "Windsurf", icon: "https://codeium.com/favicon.ico" },
-  { name: "Cursor AI", icon: "https://www.cursor.com/favicon.ico" },
+  { name: "Cursor AI", icon: "https://www.cursor.so/favicon.ico" },
   { name: "Supabase", icon: "https://cdn.simpleicons.org/supabase/3ECF8E" },
   { name: "Figma", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" },
-  { name: "ChatGPT", icon: "https://cdn.simpleicons.org/openai/412991" },
+  { name: "ChatGPT", icon: "https://openai.com/favicon.ico" },
   { name: "Gemini", icon: "https://cdn.simpleicons.org/googlegemini/8E24AA" },
   { name: "Veo 3", icon: "https://cdn.simpleicons.org/google/4285F4" },
   { name: "CapCut", icon: capcutImage },
@@ -62,6 +62,46 @@ const About = () => {
                   src={mainImage}
                   alt="Keneth - Developer"
                   className="w-full h-full object-cover"
+                />
+              </div>
+
+              <div className="absolute inset-0 pointer-events-none">
+                {/* Upper / outside */}
+                <div
+                  className="orange-snow-dot"
+                  style={{ top: "-6%", left: "22%", animationDelay: "0s", animationDuration: "5s" }}
+                />
+                <div
+                  className="orange-snow-dot"
+                  style={{ top: "-4%", left: "55%", animationDelay: "0.7s", animationDuration: "5.5s" }}
+                />
+                <div
+                  className="orange-snow-dot"
+                  style={{ top: "4%", right: "10%", animationDelay: "1.4s", animationDuration: "4.5s" }}
+                />
+
+                {/* Sides */}
+                <div
+                  className="orange-snow-dot"
+                  style={{ top: "28%", left: "4%", animationDelay: "1.1s", animationDuration: "5.2s" }}
+                />
+                <div
+                  className="orange-snow-dot"
+                  style={{ top: "32%", right: "3%", animationDelay: "1.9s", animationDuration: "4.8s" }}
+                />
+
+                {/* Lower area */}
+                <div
+                  className="orange-snow-dot"
+                  style={{ bottom: "24%", left: "20%", animationDelay: "2.3s", animationDuration: "5.3s" }}
+                />
+                <div
+                  className="orange-snow-dot"
+                  style={{ bottom: "16%", right: "18%", animationDelay: "2.9s", animationDuration: "4.7s" }}
+                />
+                <div
+                  className="orange-snow-dot"
+                  style={{ bottom: "-6%", left: "48%", animationDelay: "3.4s", animationDuration: "5.6s" }}
                 />
               </div>
 
@@ -109,7 +149,7 @@ const About = () => {
             {/* Skills */}
             <div className="space-y-4">
               <h3 className="text-foreground font-semibold">SKill & Knowledge</h3>
-              <div className="flex flex-wrap gap-4">
+              <div className="grid grid-cols-3 gap-4 sm:grid-cols-4 lg:grid-cols-5">
                 {skills.map((skill, index) => (
                   <motion.div
                     key={skill.name}

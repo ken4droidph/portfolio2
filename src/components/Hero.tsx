@@ -35,7 +35,7 @@ const Hero = () => {
               transition={{ duration: 2, ease: "easeOut" }}
               className="text-4xl md:text-6xl font-bold text-foreground max-w-xl text-right md:text-left"
             >
-              Hi, I&apos;m <span className="gradient-text">Keneth</span>
+              Hi, I&apos;m <span className="gradient-text">Ken</span>
             </motion.h1>
             <motion.h1
               initial={{ opacity: 0, x: 200, y: -40 }}

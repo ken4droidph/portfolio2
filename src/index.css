@@ -56,6 +56,20 @@
     --sidebar-ring: 16 100% 55%;
   }
 
+@keyframes orange-snow {
+  0% {
+    transform: translateY(0px);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(24px);
+    opacity: 0;
+  }
+}
+
   .dark {
     --background: 226 67% 4%;
     --foreground: 0 0% 98%;
@@ -133,6 +147,18 @@
     @apply absolute rounded-full pointer-events-none;
     background: radial-gradient(circle, hsl(var(--primary) / 0.2) 0%, transparent 70%);
     filter: blur(60px);
+  }
+
+  .orange-snow-dot {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-radius: 9999px;
+    background-color: hsl(var(--primary));
+    opacity: 0.8;
+    box-shadow: 0 0 10px hsl(var(--primary) / 0.7);
+    pointer-events: none;
+    animation: orange-snow 4s linear infinite;
   }
 
   .card-glow {
