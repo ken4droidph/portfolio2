@@ -50,13 +50,13 @@ const galleryItems = [
   },
   {
     id: 7,
-    title: "Portfolio Project",
+    title: "Website Design Blank Pink Theme",
     image: img7,
     category: "",
   },
   {
     id: 8,
-    title: "Advanced Portfolio",
+    title: "Barber Shop Website Design",
     image: img8,
     category: "",
   },
