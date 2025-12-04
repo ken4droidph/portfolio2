@@ -7,6 +7,7 @@ import img2 from "./images/2.jpg";
 import img3 from "./images/3.jpg";
 import img4 from "./images/4.jpg";
 import img5 from "./images/5.jpg";
+import img6 from "./images/6.jpg";
 
 const galleryItems = [
   {
@@ -39,6 +40,12 @@ const galleryItems = [
     image: img5,
     category: "",
   },
+  {
+    id: 6,
+    title: "Responsive Minimal Store",
+    image: img6,
+    category: "",
+  },
 ];
 
 type GalleryProps = {
@@ -60,6 +67,8 @@ const Gallery = ({ showViewAllButton = true }: GalleryProps) => {
       navigate("/frameworks-comparison#section2");
     } else if (item.id === 5) {
       navigate("/frameworks-comparison#section3");
+    } else if (item.id === 6) {
+      window.open("https://ken4droidph.github.io/store/", "_blank");
     } else {
       setSelectedImage(item);
     }
