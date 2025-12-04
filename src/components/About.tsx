@@ -4,6 +4,9 @@ import { useRef } from "react";
 import mainImage from "./images/main.png";
 import readdyImage from "./images/readdy.png";
 import capcutImage from "./images/capcut.png";
+import wordImage from "./images/word.png";
+import excelImage from "./images/excel.png";
+import powerpointImage from "./images/powerpoint.png";
 
 const skills = [
   { name: "HTML", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" },
@@ -27,6 +30,9 @@ const skills = [
   { name: "Photoshop", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/photoshop/photoshop-plain.svg" },
   { name: "YouTube", icon: "https://cdn.simpleicons.org/youtube/FF0000" },
   { name: "Google Ads", icon: "https://cdn.simpleicons.org/googleads/4285F4" },
+  { name: "Word", icon: wordImage },
+  { name: "Excel", icon: excelImage },
+  { name: "PowerPoint", icon: powerpointImage },
 ];
 
 const About = () => {
