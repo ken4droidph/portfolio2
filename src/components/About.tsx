@@ -148,7 +148,7 @@ const About = () => {
 
             {/* Skills */}
             <div className="space-y-4">
-              <h3 className="text-foreground font-semibold">SKill & Knowledge</h3>
+              <h3 className="text-foreground font-semibold">SKills & Knowledge</h3>
               <div className="grid grid-cols-3 gap-3 sm:grid-cols-4 lg:grid-cols-5">
                 {skills.map((skill, index) => (
                   <motion.div

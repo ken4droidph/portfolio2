@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Multimedia Dashboard</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+<style>
+body, html {
+  height: 100%;
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f0f4f8;
+  color: #333;
+}
+
+h1 {
+  text-align: center;
+  margin: 20px 0;
+  color: #2c3e50;
+  text-shadow: 1px 1px 2px #bdc3c7;
+  animation: fadeIn 2s ease-in-out;
+}
+
+.dashboard {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 15px;
+  margin: 20px;
+  height: calc(100vh - 100px);
+  transition: all 0.3s ease;
+}
+
+.grid-item {
+  background: linear-gradient(135deg, #74ebd5, #ACB6E5);
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  animation: slideUp 1s ease-in-out;
+  padding: 10px;
+  cursor: pointer;
+  transition: transform 0.5s ease, z-index 0.5s ease, opacity 0.5s ease, height 0.5s ease;
+}
+
+.grid-item h2 {
+  margin-bottom: 10px;
+  color: #fff;
+  text-shadow: 1px 1px 2px #2c3e50;
+  font-size: 1.5em;
+  animation: fadeIn 1.5s ease-in-out;
+  z-index: 1;
+}
+
+#map, .audio-wrapper, .clock-wrapper {
+  width: 95%;
+  height: calc(100% - 50px);
+  border-radius: 10px;
+}
+
+.controls {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+button {
+  padding: 8px 15px;
+  font-size: 1em;
+  border: none;
+  border-radius: 8px;
+  background: #3498db;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+  margin-top: 5px;
+}
+
+button:hover {
+  background: #2980b9;
+}
+
+#clock {
+  font-size: 2.5em;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 1px 1px 2px #2c3e50;
+  animation: pulse 2s infinite;
+}
+
+.video-wrapper {
+  position: relative;
+  width: 95%;
+  height: calc(100% - 50px);
+}
+
+.video-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+@keyframes slideUp {
+  0% { transform: translateY(50px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+/* Focused effect */
+.focused {
+  position: fixed !important;
+  top: 50% !important;
+  left: 50% !important;
+  width: 90% !important;
+  height: 90% !important;
+  transform: translate(-50%, -50%) !important;
+  z-index: 999 !important;
+  border-radius: 20px;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  align-items: center !important;
+}
+
+.focused #map, 
+.focused .audio-wrapper, 
+.focused .clock-wrapper,
+.focused .video-wrapper {
+  height: calc(100% - 50px) !important; 
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  z-index: 998;
+  display: none;
+}
+
+/* Exit button for mobile-friendly focus mode */
+#exit-btn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 10px 15px;
+  font-size: 1.5em;
+  background: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  display: none;
+  z-index: 1000;
+  cursor: pointer;
+}
+</style>
+</head>
+<body>
+
+<h1>My Multimedia Dashboard</h1>
+
+<div class="dashboard">
+  <!-- Map -->
+  <div class="grid-item" id="map-item">
+    <h2>My Address Bacolod City</h2>
+    <div id="map"></div>
+  </div>
+
+  <!-- Audio Player -->
+  <div class="grid-item" id="audio-item">
+    <h2>Audio Player</h2>
+    <div class="controls audio-wrapper">
+      <audio id="audio" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" controls></audio>
+    </div>
+  </div>
+
+  <!-- YouTube Video -->
+  <div class="grid-item" id="video-item">
+    <h2>YouTube Video</h2>
+    <div class="controls video-wrapper">
+      <iframe id="yt-video" src="https://www.youtube.com/embed/DzCMAoREVTc?enablejsapi=1" 
+              title="Paano Nabuo ang Unang Code sa Mundo? | History ng Programming" 
+              frameborder="0" 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+              allowfullscreen>
+      </iframe>
+      <button id="video-btn">Play / Focus Video</button>
+    </div>
+  </div>
+
+  <!-- Live Clock -->
+  <div class="grid-item" id="clock-item">
+    <h2>Live Clock</h2>
+    <div class="controls clock-wrapper">
+      <div id="clock"></div>
+    </div>
+  </div>
+</div>
+
+<div class="overlay" id="overlay"></div>
+<button id="exit-btn">✕</button>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="https://www.youtube.com/iframe_api"></script>
+<script>
+  // Initialize Map
+  const map = L.map('map').setView([10.669025087733806, 122.94915310796878], 13); 
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19 }).addTo(map);
+  L.marker([10.669025087733806, 122.94915310796878])
+    .addTo(map)
+    .bindPopup('Bacolod City')
+    .openPopup();
+
+  // Live Clock
+  function updateClock() {
+    document.getElementById('clock').textContent = new Date().toLocaleTimeString();
+  }
+  setInterval(updateClock, 1000);
+  updateClock();
+
+  const overlay = document.getElementById('overlay');
+  const exitBtn = document.getElementById('exit-btn');
+  const items = document.querySelectorAll('.grid-item');
+
+  function exitFocus() {
+    items.forEach(i => i.classList.remove('focused'));
+    items.forEach(i => i.style.opacity = '1');
+    overlay.style.display = 'none';
+    exitBtn.style.display = 'none';
+    if(player && player.pauseVideo) player.pauseVideo();
+  }
+
+  // Item click: enter focus mode
+  items.forEach(item => {
+    item.addEventListener('click', e => {
+      if(e.target.tagName === 'BUTTON') return;
+      items.forEach(i => i.classList.remove('focused'));
+      item.classList.add('focused');
+      overlay.style.display = 'block';
+      exitBtn.style.display = 'block';
+      items.forEach(i => i.style.opacity = i===item?'1':'0.3');
+
+      // Resize map if focused
+      if(item.id === 'map-item') setTimeout(() => map.invalidateSize(), 300);
+    });
+  });
+
+  overlay.addEventListener('click', exitFocus);
+  exitBtn.addEventListener('click', exitFocus);
+
+  // YouTube Player API
+  let player;
+  function onYouTubeIframeAPIReady() { player = new YT.Player('yt-video'); }
+
+  const videoBtn = document.getElementById('video-btn');
+  const videoItem = document.getElementById('video-item');
+
+  videoBtn.addEventListener('click', () => {
+    items.forEach(i => i.classList.remove('focused'));
+    videoItem.classList.add('focused');
+    overlay.style.display = 'block';
+    exitBtn.style.display = 'block';
+    items.forEach(i => i.style.opacity = i===videoItem?'1':'0.3');
+
+    if(player && player.getPlayerState) {
+      const state = player.getPlayerState();
+      if(state === YT.PlayerState.PLAYING) player.pauseVideo();
+      else player.playVideo();
+    }
+  });
+</script>
+
+</body>
+</html>

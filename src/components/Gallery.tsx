@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { X, ArrowsOut, ArrowRight } from "@phosphor-icons/react";
+import { X, ArrowRight } from "@phosphor-icons/react";
 import { useNavigate } from "react-router-dom";
 import img1 from "./images/1.jpg";
 import img2 from "./images/2.jpg";
@@ -23,21 +23,21 @@ const galleryItems = [
   },
   {
     id: 3,
-    title: "Web Design 3",
+    title: "Snake Game With AI Wall",
     image: img3,
-    category: "Web Design",
+    category: "",
   },
   {
     id: 4,
-    title: "Web Design 4",
+    title: "Free Funtion",
     image: img4,
-    category: "Web Design",
+    category: "",
   },
   {
     id: 5,
-    title: "Web Design 5",
+    title: "Multimedia",
     image: img5,
-    category: "Web Design",
+    category: "",
   },
 ];
 
@@ -48,6 +48,22 @@ type GalleryProps = {
 const Gallery = ({ showViewAllButton = true }: GalleryProps) => {
   const [selectedImage, setSelectedImage] = useState<typeof galleryItems[0] | null>(null);
   const navigate = useNavigate();
+
+  const handleItemClick = (item: typeof galleryItems[0]) => {
+    if (item.id === 1) {
+      navigate("/js-name-animation");
+    } else if (item.id === 2) {
+      navigate("/frameworks-comparison#section1");
+    } else if (item.id === 3) {
+      navigate("/snake-game");
+    } else if (item.id === 4) {
+      navigate("/frameworks-comparison#section2");
+    } else if (item.id === 5) {
+      navigate("/frameworks-comparison#section3");
+    } else {
+      setSelectedImage(item);
+    }
+  };
 
   return (
     <section id="gallery" className="relative py-32 overflow-hidden">
@@ -92,26 +108,18 @@ const Gallery = ({ showViewAllButton = true }: GalleryProps) => {
                   <img
                     src={item.image}
                     alt={item.title}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 cursor-pointer"
+                    onClick={() => handleItemClick(item)}
                   />
                   
                   {/* Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-end p-4 md:p-6">
+                  <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-end p-4 md:p-6 pointer-events-none">
                     <div className="space-y-1 md:space-y-2">
                       <span className="text-primary text-xs md:text-sm font-medium">{item.category}</span>
                       <h3 className="text-foreground text-sm md:text-xl font-bold">{item.title}</h3>
                     </div>
                   </div>
 
-                  {/* Fullscreen Button */}
-                  <motion.button
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                    onClick={() => setSelectedImage(item)}
-                    className="absolute top-2 right-2 md:top-4 md:right-4 w-8 h-8 md:w-10 md:h-10 glass rounded-full flex items-center justify-center text-foreground opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                  >
-                    <ArrowsOut weight="bold" className="w-4 h-4 md:w-5 md:h-5" />
-                  </motion.button>
                 </div>
               </motion.div>
             ))}

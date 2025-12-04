@@ -8,6 +8,7 @@ import NotFound from "./pages/NotFound";
 import ProjectGallery from "./pages/ProjectGallery";
 import JsNameAnimation from "./pages/JsNameAnimation";
 import FrameworksComparison from "./pages/FrameworksComparison";
+import SnakeGame from "./pages/SnakeGame";
 
 const queryClient = new QueryClient();
 
@@ -21,6 +22,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/js-name-animation" element={<JsNameAnimation />} />
           <Route path="/frameworks-comparison" element={<FrameworksComparison />} />
+          <Route path="/snake-game" element={<SnakeGame />} />
           <Route path="/projects/:id" element={<ProjectGallery />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

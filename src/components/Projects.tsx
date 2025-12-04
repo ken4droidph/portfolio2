@@ -130,7 +130,7 @@ const Projects = () => {
                     ) : project.title === "Frameworks & Libraries Function Comparison" ? (
                       <button
                         type="button"
-                        onClick={() => navigate("/frameworks-comparison")}
+                        onClick={() => navigate("/frameworks-comparison#section1")}
                         className="hover:text-primary transition-colors duration-300 bg-transparent"
                       >
                         {project.title}
