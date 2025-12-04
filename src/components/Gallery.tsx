@@ -8,6 +8,8 @@ import img3 from "./images/3.jpg";
 import img4 from "./images/4.jpg";
 import img5 from "./images/5.jpg";
 import img6 from "./images/6.jpg";
+import img7 from "./images/7.jpg";
+import img8 from "./images/8.jpg";
 
 const galleryItems = [
   {
@@ -46,6 +48,18 @@ const galleryItems = [
     image: img6,
     category: "",
   },
+  {
+    id: 7,
+    title: "Portfolio Project",
+    image: img7,
+    category: "",
+  },
+  {
+    id: 8,
+    title: "Advanced Portfolio",
+    image: img8,
+    category: "",
+  },
 ];
 
 type GalleryProps = {
@@ -69,6 +83,10 @@ const Gallery = ({ showViewAllButton = true }: GalleryProps) => {
       navigate("/frameworks-comparison#section3");
     } else if (item.id === 6) {
       window.open("https://ken4droidph.github.io/store/", "_blank");
+    } else if (item.id === 7) {
+      window.open("https://ken4droidph.github.io/kenportfolio/file/1/index.html", "_blank");
+    } else if (item.id === 8) {
+      window.open("https://ken4droidph.github.io/kenportfolio/file/3/index.html", "_blank");
     } else {
       setSelectedImage(item);
     }
