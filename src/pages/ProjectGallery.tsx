@@ -60,7 +60,7 @@ const ProjectGallery = () => {
         )}
 
         {/* Gallery Section */}
-        <Gallery showViewAllButton={false} />
+        <Gallery showViewAllButton={false} titleUnderImage={isAllProject} />
       </main>
       <Footer />
     </div>

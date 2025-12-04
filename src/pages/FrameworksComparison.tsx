@@ -2,6 +2,13 @@ import { useRef, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import cpuImg from "@/components/images/cpu.jpg";
+import gpuImg from "@/components/images/gpu.jpg";
+import ramImg from "@/components/images/ram.jpg";
+import motherboardImg from "@/components/images/motherboard.jpg";
+import storageImg from "@/components/images/storage.jpg";
+import powersupplyImg from "@/components/images/powersupply.jpg";
+import keyboardImg from "@/components/images/keyboard.jpg";
 
 const FrameworksComparison = () => {
   const location = useLocation();
@@ -465,6 +472,161 @@ const FrameworksComparison = () => {
       }
       if (videoBtn && videoBtnHandler) {
         videoBtn.removeEventListener("click", videoBtnHandler);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    const storeRoot = document.getElementById("pc-store-root") as HTMLDivElement | null;
+    if (!storeRoot) return;
+
+    const inputs = storeRoot.querySelectorAll<HTMLInputElement>('input[type="radio"]');
+    const totalEl = document.getElementById("total-price");
+    const finalBox = document.getElementById("final-box") as HTMLDivElement | null;
+    const finalPriceEl = document.getElementById("final-price");
+    const addBtn = document.getElementById("add-cart");
+
+    if (!totalEl || !finalBox || !finalPriceEl || !addBtn) return;
+
+    let currentTotal = 0;
+
+    const calculateTotal = () => {
+      let total = 0;
+      inputs.forEach((input) => {
+        if (input.checked) {
+          const value = parseInt(input.value, 10);
+          if (!Number.isNaN(value)) {
+            total += value;
+          }
+        }
+      });
+      currentTotal = total;
+      totalEl.textContent = String(total);
+    };
+
+    calculateTotal();
+
+    const inputHandlers: Array<[(e: Event) => void, HTMLInputElement]> = [];
+    inputs.forEach((input) => {
+      const handler = () => calculateTotal();
+      input.addEventListener("change", handler);
+      inputHandlers.push([handler, input]);
+    });
+
+    const addClickHandler = () => {
+      finalBox.style.display = "block";
+      finalPriceEl.textContent = String(currentTotal);
+    };
+
+    addBtn.addEventListener("click", addClickHandler);
+
+    return () => {
+      inputHandlers.forEach(([handler, el]) => {
+        el.removeEventListener("change", handler);
+      });
+      addBtn.removeEventListener("click", addClickHandler);
+    };
+  }, []);
+
+  useEffect(() => {
+    const dealRoot = document.querySelector(".deal-root") as HTMLDivElement | null;
+    if (!dealRoot) return;
+
+    const oldPriceSpan = document.getElementById("oldPrice");
+    const newPriceSpan = document.getElementById("newPrice");
+    const discountSpan = document.getElementById("discountPercent");
+    const oldPriceInput = document.getElementById("oldPriceInput") as HTMLInputElement | null;
+    const newPriceInput = document.getElementById("newPriceInput") as HTMLInputElement | null;
+    const datePicker = document.getElementById("datePicker") as HTMLInputElement | null;
+    const countdownText = document.getElementById("countdownText");
+    const saveOldBtn = document.getElementById("saveOldPriceBtn") as HTMLButtonElement | null;
+    const saveNewBtn = document.getElementById("saveNewPriceBtn") as HTMLButtonElement | null;
+    const setCountdownBtn = document.getElementById("setCountdownBtn") as HTMLButtonElement | null;
+
+    if (!oldPriceSpan || !newPriceSpan || !discountSpan || !countdownText) return;
+    if (!saveOldBtn || !saveNewBtn || !setCountdownBtn) return;
+
+    let oldPrice = 120;
+    let newPrice = 80;
+
+    const calculateDiscount = () => {
+      if (oldPrice <= 0) {
+        discountSpan.textContent = "0%";
+        return;
+      }
+      const discount = Math.round(((oldPrice - newPrice) / oldPrice) * 100);
+      discountSpan.textContent = `-${discount}%`;
+    };
+
+    const handleSaveOld = () => {
+      if (!oldPriceInput) return;
+      const value = parseFloat(oldPriceInput.value);
+      if (!value || value <= 0) return;
+      oldPrice = value;
+      oldPriceSpan.textContent = `$${oldPrice}`;
+      calculateDiscount();
+    };
+
+    const handleSaveNew = () => {
+      if (!newPriceInput) return;
+      const value = parseFloat(newPriceInput.value);
+      if (!value || value <= 0) return;
+      newPrice = value;
+      newPriceSpan.textContent = `$${newPrice}`;
+      calculateDiscount();
+    };
+
+    let countdownDate: number | null = null;
+    let timer: number | undefined;
+
+    const updateCountdown = () => {
+      if (!countdownDate) return;
+      const now = new Date().getTime();
+      const diff = countdownDate - now;
+
+      if (diff <= 0) {
+        countdownText.textContent = "Countdown finished!";
+        if (timer !== undefined) {
+          window.clearInterval(timer);
+        }
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const secs = Math.floor((diff % (1000 * 60)) / 1000);
+
+      countdownText.textContent = `${days}d  ${hours}h  ${mins}m  ${secs}s`;
+    };
+
+    const handleSetCountdown = () => {
+      if (!datePicker) return;
+      const dateValue = datePicker.value;
+      if (!dateValue) {
+        countdownText.textContent = "Please select a date.";
+        return;
+      }
+
+      countdownDate = new Date(dateValue).getTime();
+      if (timer !== undefined) {
+        window.clearInterval(timer);
+      }
+      timer = window.setInterval(updateCountdown, 1000);
+    };
+
+    calculateDiscount();
+
+    saveOldBtn.addEventListener("click", handleSaveOld);
+    saveNewBtn.addEventListener("click", handleSaveNew);
+    setCountdownBtn.addEventListener("click", handleSetCountdown);
+
+    return () => {
+      saveOldBtn.removeEventListener("click", handleSaveOld);
+      saveNewBtn.removeEventListener("click", handleSaveNew);
+      setCountdownBtn.removeEventListener("click", handleSetCountdown);
+      if (timer !== undefined) {
+        window.clearInterval(timer);
       }
     };
   }, []);
@@ -1048,6 +1210,423 @@ const FrameworksComparison = () => {
 
             <div className="overlay" id="overlay" />
             <button id="exit-btn">✕</button>
+          </div>
+        </section>
+
+        <section id="section4" className="w-full mt-16">
+          <style>{`
+            .pc-store-root,
+            .pc-store-root * {
+              box-sizing: border-box;
+            }
+
+            .pc-store-root {
+              font-family: Arial, sans-serif;
+              background: #f5f5f5;
+              color: #333;
+              padding: 20px;
+              border-radius: 16px;
+              box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+              max-width: 1200px;
+              margin: 0 auto;
+            }
+
+            .pc-store-root h1 {
+              text-align: center;
+              margin-bottom: 30px;
+              color: #111;
+            }
+
+            .pc-store-grid {
+              display: grid;
+              grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+              gap: 20px;
+            }
+
+            .pc-product-card {
+              background: #fff;
+              border-radius: 10px;
+              overflow: hidden;
+              box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+              transition: transform 0.3s, box-shadow 0.3s;
+              padding: 15px;
+            }
+
+            .pc-product-card:hover {
+              transform: translateY(-5px);
+              box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+            }
+
+            .pc-product-card img {
+              width: 100%;
+              height: 150px;
+              object-fit: cover;
+              border-radius: 5px;
+              margin-bottom: 10px;
+            }
+
+            .pc-product-card h3 {
+              font-size: 1.1rem;
+              margin-bottom: 10px;
+            }
+
+            .pc-product-card label {
+              display: flex;
+              justify-content: space-between;
+              margin-bottom: 8px;
+              cursor: pointer;
+              font-size: 0.9rem;
+            }
+
+            .pc-total-cart,
+            .pc-final-cart {
+              margin-top: 30px;
+              background: #fff;
+              padding: 20px;
+              border-radius: 10px;
+              font-weight: bold;
+              box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+              text-align: center;
+            }
+
+            .pc-add-to-cart-btn {
+              margin-top: 20px;
+              width: 100%;
+              padding: 15px;
+              background: #111;
+              color: #fff;
+              font-size: 16px;
+              font-weight: bold;
+              border: none;
+              border-radius: 10px;
+              cursor: pointer;
+              transition: 0.3s;
+            }
+
+            .pc-add-to-cart-btn:hover {
+              background: #333;
+            }
+
+            @media (max-width: 600px) {
+              .pc-product-card img {
+                height: 120px;
+              }
+            }
+          `}</style>
+
+          <div className="pc-store-root" id="pc-store-root">
+            <h1>PC Parts Store - Script Builder</h1>
+
+            <div className="pc-store-grid">
+              <div className="pc-product-card">
+                <img src={cpuImg} alt="CPU" />
+                <h3>Select CPU</h3>
+                <label>
+                  No CPU (0)
+                  <input type="radio" name="cpu" value="0" />
+                </label>
+                <label>
+                  Intel i9 13900K ($500)
+                  <input type="radio" name="cpu" value="500" defaultChecked />
+                </label>
+                <label>
+                  AMD Ryzen 9 7950X ($450)
+                  <input type="radio" name="cpu" value="450" />
+                </label>
+                <label>
+                  Intel i7 13700K ($350)
+                  <input type="radio" name="cpu" value="350" />
+                </label>
+              </div>
+
+              <div className="pc-product-card">
+                <img src={gpuImg} alt="GPU" />
+                <h3>Select GPU</h3>
+                <label>
+                  No GPU (0)
+                  <input type="radio" name="gpu" value="0" />
+                </label>
+                <label>
+                  NVIDIA RTX 4080 ($1200)
+                  <input type="radio" name="gpu" value="1200" defaultChecked />
+                </label>
+                <label>
+                  AMD RX 7900 XTX ($1000)
+                  <input type="radio" name="gpu" value="1000" />
+                </label>
+                <label>
+                  NVIDIA RTX 4070 Ti ($800)
+                  <input type="radio" name="gpu" value="800" />
+                </label>
+              </div>
+
+              <div className="pc-product-card">
+                <img src={ramImg} alt="RAM" />
+                <h3>Select RAM</h3>
+                <label>
+                  No RAM (0)
+                  <input type="radio" name="ram" value="0" />
+                </label>
+                <label>
+                  32GB DDR5 ($200)
+                  <input type="radio" name="ram" value="200" defaultChecked />
+                </label>
+                <label>
+                  64GB DDR5 ($350)
+                  <input type="radio" name="ram" value="350" />
+                </label>
+                <label>
+                  16GB DDR4 ($100)
+                  <input type="radio" name="ram" value="100" />
+                </label>
+              </div>
+
+              <div className="pc-product-card">
+                <img src={motherboardImg} alt="Motherboard" />
+                <h3>Select Motherboard</h3>
+                <label>
+                  No Motherboard (0)
+                  <input type="radio" name="motherboard" value="0" />
+                </label>
+                <label>
+                  ASUS ROG ($300)
+                  <input type="radio" name="motherboard" value="300" defaultChecked />
+                </label>
+                <label>
+                  MSI Tomahawk ($250)
+                  <input type="radio" name="motherboard" value="250" />
+                </label>
+                <label>
+                  Gigabyte Aorus ($280)
+                  <input type="radio" name="motherboard" value="280" />
+                </label>
+              </div>
+
+              <div className="pc-product-card">
+                <img src={storageImg} alt="Storage" />
+                <h3>Select Storage</h3>
+                <label>
+                  No Storage (0)
+                  <input type="radio" name="storage" value="0" />
+                </label>
+                <label>
+                  1TB NVMe SSD ($150)
+                  <input type="radio" name="storage" value="150" defaultChecked />
+                </label>
+                <label>
+                  2TB NVMe SSD ($250)
+                  <input type="radio" name="storage" value="250" />
+                </label>
+                <label>
+                  500GB SATA SSD ($80)
+                  <input type="radio" name="storage" value="80" />
+                </label>
+              </div>
+
+              <div className="pc-product-card">
+                <img src={powersupplyImg} alt="PSU" />
+                <h3>Select Power Supply</h3>
+                <label>
+                  No PSU (0)
+                  <input type="radio" name="psu" value="0" />
+                </label>
+                <label>
+                  850W Gold ($120)
+                  <input type="radio" name="psu" value="120" defaultChecked />
+                </label>
+                <label>
+                  750W Bronze ($90)
+                  <input type="radio" name="psu" value="90" />
+                </label>
+                <label>
+                  1000W Platinum ($200)
+                  <input type="radio" name="psu" value="200" />
+                </label>
+              </div>
+            </div>
+
+            <div className="pc-total-cart">
+              Current Total: $<span id="total-price">0</span>
+            </div>
+
+            <button className="pc-add-to-cart-btn" id="add-cart">
+              ADD TO CART
+            </button>
+
+            <div className="pc-final-cart" id="final-box" style={{ display: "none" }}>
+              Final Price: $<span id="final-price" />
+            </div>
+          </div>
+        </section>
+
+        <section id="section5" className="w-full mt-16">
+          <style>{`
+            .deal-root,
+            .deal-root * {
+              box-sizing: border-box;
+            }
+
+            .deal-root {
+              font-family: Arial, sans-serif;
+              background: #f5f5f5;
+              padding: 30px;
+              display: flex;
+              justify-content: center;
+            }
+
+            .deal-root .deal-container {
+              max-width: 800px;
+              margin: 0 auto;
+              display: flex;
+              flex-wrap: wrap;
+              gap: 20px;
+            }
+
+            .deal-root .deal-box {
+              flex: 1;
+              min-width: 320px;
+              background: #fff;
+              border-radius: 12px;
+              padding: 20px;
+              box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+              text-align: left;
+            }
+
+            .deal-root .deal-product-card img {
+              width: 100%;
+              border-radius: 10px;
+              margin-bottom: 15px;
+            }
+
+            .deal-root .deal-product-title {
+              font-size: 1.4rem;
+              margin-bottom: 10px;
+              font-weight: bold;
+              color: #333;
+            }
+
+            .deal-root .deal-price-box {
+              margin-top: 10px;
+            }
+
+            .deal-root .deal-price-box > div {
+              color: #333;
+            }
+
+            .deal-root .old-price {
+              text-decoration: line-through;
+              color: #777;
+              font-size: 1rem;
+            }
+
+            .deal-root .new-price {
+              color: #e60023;
+              font-weight: bold;
+              font-size: 1.4rem;
+            }
+
+            .deal-root .discount-tag {
+              display: inline-block;
+              background: #e60023;
+              color: #fff;
+              padding: 5px 10px;
+              border-radius: 50px;
+              font-size: 0.9rem;
+              margin-left: 10px;
+              font-weight: bold;
+            }
+
+            .deal-root .input-box {
+              margin-top: 20px;
+            }
+
+            .deal-root input[type="number"],
+            .deal-root input[type="date"] {
+              width: 100%;
+              padding: 10px;
+              border: 1px solid #ccc;
+              border-radius: 6px;
+              margin-bottom: 10px;
+              font-size: 1rem;
+              color: #000;
+            }
+
+            .deal-root button {
+              width: 100%;
+              padding: 10px;
+              background: #3a66ff;
+              color: #fff;
+              border: none;
+              border-radius: 6px;
+              font-size: 1rem;
+              font-weight: bold;
+              cursor: pointer;
+              transition: 0.3s;
+              margin-bottom: 10px;
+            }
+
+            .deal-root button:hover {
+              background: #2d4fcc;
+            }
+
+            .deal-root .countdown {
+              margin-top: 15px;
+              font-size: 1.4rem;
+              font-weight: bold;
+              color: #333;
+            }
+          `}</style>
+
+          <div className="deal-root">
+            <div className="deal-container">
+              <div className="deal-box deal-product-card">
+                <img src={keyboardImg} alt="Gaming Mechanical Keyboard" />
+                <div className="deal-product-title">Gaming Mechanical Keyboard</div>
+
+                <div className="deal-price-box">
+                  <div>
+                    Original Price: <span className="old-price" id="oldPrice">$120</span>
+                  </div>
+                  <div>
+                    Discounted Price: <span className="new-price" id="newPrice">$80</span>
+                    <span className="discount-tag" id="discountPercent">-33%</span>
+                  </div>
+                </div>
+
+                <div className="input-box">
+                  <input
+                    type="number"
+                    id="oldPriceInput"
+                    placeholder="Enter original price..."
+                    min={1}
+                  />
+                  <button type="button" id="saveOldPriceBtn">
+                    Save Original Price
+                  </button>
+
+                  <input
+                    type="number"
+                    id="newPriceInput"
+                    placeholder="Enter discounted price..."
+                    min={1}
+                  />
+                  <button type="button" id="saveNewPriceBtn">
+                    Save Discounted Price
+                  </button>
+                </div>
+              </div>
+
+              <div className="deal-box">
+                <h2 style={{ marginBottom: 15 }}>Countdown Timer</h2>
+                <input type="date" id="datePicker" />
+                <button type="button" id="setCountdownBtn">
+                  Set Countdown
+                </button>
+                <div className="countdown" id="countdownText">
+                  No date selected
+                </div>
+              </div>
+            </div>
           </div>
         </section>
       </main>

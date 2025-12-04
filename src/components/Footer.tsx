@@ -10,6 +10,7 @@ const footerLinks = [
   { label: "My Resume", href: `${base}#resume` },
   { label: "Web Design & Function", href: `${base}#gallery` },
   { label: "Contact", href: `${base}#contact` },
+  { label: "My AI VIDEOS", href: "https://drive.google.com/drive/u/0/folders/1YOniY9NNJ1yOVIHInuQ2iqtqXmGggQU3", external: true },
 ];
 
 const Footer = () => {
@@ -27,6 +28,8 @@ const Footer = () => {
                 <motion.a
                   key={link.label}
                   href={link.href}
+                  target={(link as any).external ? "_blank" : undefined}
+                  rel={(link as any).external ? "noopener noreferrer" : undefined}
                   whileHover={{ y: -2 }}
                   className="text-muted-foreground hover:text-primary transition-colors duration-300 font-medium whitespace-nowrap"
                 >
@@ -55,6 +58,8 @@ const Footer = () => {
               <motion.a
                 key={link.label}
                 href={link.href}
+                target={(link as any).external ? "_blank" : undefined}
+                rel={(link as any).external ? "noopener noreferrer" : undefined}
                 whileHover={{ y: -2 }}
                 className="text-muted-foreground hover:text-primary transition-colors duration-300 text-sm font-medium"
               >

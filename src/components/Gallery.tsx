@@ -10,6 +10,8 @@ import img5 from "./images/5.jpg";
 import img6 from "./images/6.jpg";
 import img7 from "./images/7.jpg";
 import img8 from "./images/8.jpg";
+import img9 from "./images/9.jpg";
+import img10 from "./images/10.jpg";
 
 const galleryItems = [
   {
@@ -60,13 +62,26 @@ const galleryItems = [
     image: img8,
     category: "",
   },
+  {
+    id: 9,
+    title: "PC Parts Store - Script Builder",
+    image: img9,
+    category: "",
+  },
+  {
+    id: 10,
+    title: "Set Discount with % + Countdown Timer",
+    image: img10,
+    category: "",
+  },
 ];
 
 type GalleryProps = {
   showViewAllButton?: boolean;
+  titleUnderImage?: boolean;
 };
 
-const Gallery = ({ showViewAllButton = true }: GalleryProps) => {
+const Gallery = ({ showViewAllButton = true, titleUnderImage = false }: GalleryProps) => {
   const [selectedImage, setSelectedImage] = useState<typeof galleryItems[0] | null>(null);
   const navigate = useNavigate();
 
@@ -87,6 +102,10 @@ const Gallery = ({ showViewAllButton = true }: GalleryProps) => {
       window.open("https://ken4droidph.github.io/kenportfolio/file/1/index.html", "_blank");
     } else if (item.id === 8) {
       window.open("https://ken4droidph.github.io/kenportfolio/file/3/index.html", "_blank");
+    } else if (item.id === 9) {
+      navigate("/frameworks-comparison#section4");
+    } else if (item.id === 10) {
+      navigate("/frameworks-comparison#section5");
     } else {
       setSelectedImage(item);
     }
@@ -139,15 +158,24 @@ const Gallery = ({ showViewAllButton = true }: GalleryProps) => {
                     onClick={() => handleItemClick(item)}
                   />
                   
-                  {/* Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-end p-4 md:p-6 pointer-events-none">
-                    <div className="space-y-1 md:space-y-2">
-                      <span className="text-primary text-xs md:text-sm font-medium">{item.category}</span>
-                      <h3 className="text-foreground text-sm md:text-xl font-bold">{item.title}</h3>
+                  {/* Overlay - only show when titleUnderImage is false */}
+                  {!titleUnderImage && (
+                    <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-end p-4 md:p-6 pointer-events-none">
+                      <div className="space-y-1 md:space-y-2">
+                        <span className="text-primary text-xs md:text-sm font-medium">{item.category}</span>
+                        <h3 className="text-foreground text-sm md:text-xl font-bold">{item.title}</h3>
+                      </div>
                     </div>
-                  </div>
+                  )}
 
                 </div>
+                
+                {/* Title under image - only show when titleUnderImage is true */}
+                {titleUnderImage && (
+                  <div className="mt-3 px-2">
+                    <h3 className="text-foreground text-sm md:text-base font-bold text-center line-clamp-2">{item.title}</h3>
+                  </div>
+                )}
               </motion.div>
             ))}
           </motion.div>
