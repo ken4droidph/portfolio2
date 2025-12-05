@@ -5,7 +5,8 @@ import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-  base: "/portfolio2/",
+  // Use root base in production (Vercel), keep /portfolio2/ for local dev
+  base: mode === "production" ? "/" : "/portfolio2/",
   server: {
     host: "::",
     port: 8080,
