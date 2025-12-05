@@ -366,7 +366,7 @@ Rules:
         {isAllProject && (
           <>
             {isChatOpen && !isScrolling && (
-              <div className="fixed bottom-28 left-2 right-2 sm:bottom-24 sm:right-6 sm:left-auto z-50 w-auto sm:w-64 rounded-2xl bg-background/95 text-foreground shadow-lg border border-orange-400 overflow-hidden flex flex-col">
+              <div className="fixed top-24 left-2 right-2 sm:bottom-24 sm:right-6 sm:left-auto sm:top-auto z-50 w-auto sm:w-64 rounded-2xl bg-background/95 text-foreground shadow-lg border border-orange-400 overflow-hidden flex flex-col">
                 <button
                   type="button"
                   onClick={() => setIsChatOpen(false)}
