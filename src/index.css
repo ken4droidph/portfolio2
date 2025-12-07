@@ -149,6 +149,12 @@
     filter: blur(60px);
   }
 
+  .center-divider {
+    @apply hidden md:block absolute inset-y-6 left-1/2 w-px bg-white/30;
+    box-shadow: var(--glow-white);
+    animation: divider-pulse 2.4s ease-in-out infinite;
+  }
+
   .orange-snow-dot {
     position: absolute;
     width: 6px;
@@ -219,6 +225,17 @@
   }
   50% {
     box-shadow: 0 0 40px hsl(var(--primary) / 0.6);
+  }
+}
+
+@keyframes divider-pulse {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scaleY(0.9);
+  }
+  50% {
+    opacity: 1;
+    transform: scaleY(1);
   }
 }
 

@@ -1,23 +1,26 @@
 import { useState, useEffect, useRef } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import Gallery from "@/components/Gallery";
+import Gallery, { galleryItems } from "@/components/Gallery";
 import { projects } from "@/components/Projects";
 import chatbotIcon from "@/components/images/chatbot.png";
 import chatbotBotIcon from "@/components/images/chatbot1.png";
 import { motion } from "framer-motion";
 import { X } from "@phosphor-icons/react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 type ChatMessage = {
   role: "user" | "assistant";
   content: string;
 };
 
+type GalleryItem = (typeof galleryItems)[0];
+
 const STORAGE_KEY = "ken-portfolio-chat-history";
 
 const ProjectGallery = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const isAllProject = id === "allproject";
   const project = !isAllProject && id ? projects.find((p) => String(p.id) === id) ?? projects[0] : null;
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -28,6 +31,40 @@ const ProjectGallery = () => {
   const [isSending, setIsSending] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
+
+  const [viewMode, setViewMode] = useState<"split" | "web" | "js">("split");
+
+  const webDesignItems = galleryItems.filter((item) => item.category === "Web Design");
+  const jsFunctionItems = galleryItems.filter((item) => item.category === "JS Function");
+
+  const webViewItems = webDesignItems;
+  const jsViewItems = jsFunctionItems;
+
+  const handleGalleryItemClick = (item: GalleryItem) => {
+    if (item.id === 1) {
+      navigate("/js-name-animation");
+    } else if (item.id === 2) {
+      navigate("/frameworks-comparison#section1");
+    } else if (item.id === 3) {
+      navigate("/snake-game");
+    } else if (item.id === 4) {
+      navigate("/frameworks-comparison#section2");
+    } else if (item.id === 5) {
+      navigate("/frameworks-comparison#section3");
+    } else if (item.id === 6) {
+      window.open("https://ken4droidph.github.io/store/", "_blank");
+    } else if (item.id === 7) {
+      window.open("https://ken4droidph.github.io/kenportfolio/file/1/index.html", "_blank");
+    } else if (item.id === 8) {
+      window.open("https://ken4droidph.github.io/kenportfolio/file/3/index.html", "_blank");
+    } else if (item.id === 9) {
+      navigate("/frameworks-comparison#section4");
+    } else if (item.id === 10) {
+      navigate("/frameworks-comparison#section5");
+    } else if (item.id === 11) {
+      window.open("https://ken4droidph.github.io/nbastore/", "_blank");
+    }
+  };
 
   useEffect(() => {
     let timeoutId: number | null = null;
@@ -361,10 +398,211 @@ Rules:
         )}
 
         {/* Gallery Section */}
-        <Gallery showViewAllButton={false} titleUnderImage={isAllProject} />
+        {!isAllProject && (
+          <Gallery showViewAllButton={false} titleUnderImage={false} />
+        )}
 
         {isAllProject && (
           <>
+            <section className="relative pt-32 pb-24 overflow-hidden">
+              <div className="light-orb w-96 h-96 top-0 left-1/4" />
+              <div className="accent-orb w-[600px] h-[600px] bottom-0 right-0 translate-x-1/2" />
+
+              <div className="container mx-auto px-6">
+                <motion.div
+                  initial={{ opacity: 0, y: 40 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8 }}
+                  className="text-center mb-10 space-y-4"
+                >
+                  <h2 className="text-3xl md:text-4xl font-bold text-foreground">
+                    Web Design &<span className="gradient-text"> JS Function</span>
+                  </h2>
+                  <p className="text-muted-foreground text-sm md:text-base max-w-2xl mx-auto">
+                    Toggle between split view or focus on Web Design or JS Function projects.
+                  </p>
+
+                  <div className="flex justify-center">
+                    <div className="inline-flex items-center rounded-full bg-secondary/60 p-1">
+                      <button
+                        type="button"
+                        onClick={() => setViewMode("split")}
+                        className={`px-4 py-1.5 text-xs md:text-sm rounded-full transition-colors ${
+                          viewMode === "split"
+                            ? "bg-primary text-primary-foreground"
+                            : "text-muted-foreground hover:text-foreground"
+                        }`}
+                      >
+                        Split View
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setViewMode("web")}
+                        className={`px-4 py-1.5 text-xs md:text-sm rounded-full transition-colors ${
+                          viewMode === "web"
+                            ? "bg-primary text-primary-foreground"
+                            : "text-muted-foreground hover:text-foreground"
+                        }`}
+                      >
+                        Web Design
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setViewMode("js")}
+                        className={`px-4 py-1.5 text-xs md:text-sm rounded-full transition-colors ${
+                          viewMode === "js"
+                            ? "bg-primary text-primary-foreground"
+                            : "text-muted-foreground hover:text-foreground"
+                        }`}
+                      >
+                        JS Function
+                      </button>
+                    </div>
+                  </div>
+                </motion.div>
+
+                <div className="relative mt-8">
+                  {viewMode === "split" && <div className="center-divider" />}
+
+                  <div className={viewMode === "split" ? "grid md:grid-cols-2 gap-8" : ""}>
+                    {viewMode === "split" && (
+                      <>
+                        <div className="pr-4 space-y-4">
+                          <h3 className="text-lg font-semibold text-foreground mb-2 text-center md:text-left">
+                            Web Design
+                          </h3>
+                          <div className="grid grid-cols-2 gap-4">
+                            {webDesignItems.map((item) => (
+                              <motion.div
+                                key={item.id}
+                                whileHover={{ y: -6, scale: 1.02 }}
+                                transition={{ duration: 0.3 }}
+                                className="group relative overflow-hidden rounded-2xl border border-border/50 bg-card/40 cursor-pointer"
+                                onClick={() => handleGalleryItemClick(item)}
+                              >
+                                <div className="aspect-[4/3] overflow-hidden">
+                                  <img
+                                    src={item.image}
+                                    alt={item.title}
+                                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                  />
+                                </div>
+                                <div className="p-3">
+                                  <p className="text-[10px] uppercase tracking-wide text-primary">
+                                    {item.category}
+                                  </p>
+                                  <h4 className="mt-1 text-sm font-semibold text-foreground line-clamp-2">
+                                    {item.title}
+                                  </h4>
+                                </div>
+                              </motion.div>
+                            ))}
+                          </div>
+                        </div>
+
+                        <div className="pl-4 space-y-4 mt-10 md:mt-0">
+                          <h3 className="text-lg font-semibold text-foreground mb-2 text-center md:text-left">
+                            JS Function
+                          </h3>
+                          <div className="grid grid-cols-2 gap-4">
+                            {jsFunctionItems.map((item) => (
+                              <motion.div
+                                key={item.id}
+                                whileHover={{ y: -6, scale: 1.02 }}
+                                transition={{ duration: 0.3 }}
+                                className="group relative overflow-hidden rounded-2xl border border-border/50 bg-card/40 cursor-pointer"
+                                onClick={() => handleGalleryItemClick(item)}
+                              >
+                                <div className="aspect-[4/3] overflow-hidden">
+                                  <img
+                                    src={item.image}
+                                    alt={item.title}
+                                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                  />
+                                </div>
+                                <div className="p-3">
+                                  <p className="text-[10px] uppercase tracking-wide text-primary">
+                                    {item.category}
+                                  </p>
+                                  <h4 className="mt-1 text-sm font-semibold text-foreground line-clamp-2">
+                                    {item.title}
+                                  </h4>
+                                </div>
+                              </motion.div>
+                            ))}
+                          </div>
+                        </div>
+                      </>
+                    )}
+
+                    {viewMode === "web" && (
+                      <div className="space-y-4">
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                          {webViewItems.map((item) => (
+                            <motion.div
+                              key={item.id}
+                              whileHover={{ y: -6, scale: 1.02 }}
+                              transition={{ duration: 0.3 }}
+                              className="group relative overflow-hidden rounded-2xl border border-border/50 bg-card/40 cursor-pointer"
+                              onClick={() => handleGalleryItemClick(item)}
+                            >
+                              <div className="aspect-[4/3] overflow-hidden">
+                                <img
+                                  src={item.image}
+                                  alt={item.title}
+                                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                />
+                              </div>
+                              <div className="p-3">
+                                <p className="text-[10px] uppercase tracking-wide text-primary">
+                                  {item.category}
+                                </p>
+                                <h4 className="mt-1 text-sm font-semibold text-foreground line-clamp-2">
+                                  {item.title}
+                                </h4>
+                              </div>
+                            </motion.div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {viewMode === "js" && (
+                      <div className="space-y-4">
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                          {jsViewItems.map((item) => (
+                            <motion.div
+                              key={item.id}
+                              whileHover={{ y: -6, scale: 1.02 }}
+                              transition={{ duration: 0.3 }}
+                              className="group relative overflow-hidden rounded-2xl border border-border/50 bg-card/40 cursor-pointer"
+                              onClick={() => handleGalleryItemClick(item)}
+                            >
+                              <div className="aspect-[4/3] overflow-hidden">
+                                <img
+                                  src={item.image}
+                                  alt={item.title}
+                                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                />
+                              </div>
+                              <div className="p-3">
+                                <p className="text-[10px] uppercase tracking-wide text-primary">
+                                  {item.category}
+                                </p>
+                                <h4 className="mt-1 text-sm font-semibold text-foreground line-clamp-2">
+                                  {item.title}
+                                </h4>
+                              </div>
+                            </motion.div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </section>
+
             {isChatOpen && !isScrolling && (
               <div className="fixed top-24 left-2 right-2 sm:bottom-24 sm:right-6 sm:left-auto sm:top-auto z-50 w-auto sm:w-64 rounded-2xl bg-background/95 text-foreground shadow-lg border border-orange-400 overflow-hidden flex flex-col">
                 <button

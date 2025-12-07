@@ -1,5 +1,5 @@
-import { motion } from "framer-motion";
-import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect } from "react";
 import { X, ArrowRight } from "@phosphor-icons/react";
 import { useNavigate } from "react-router-dom";
 import img1 from "./images/1.jpg";
@@ -12,67 +12,74 @@ import img7 from "./images/7.jpg";
 import img8 from "./images/8.jpg";
 import img9 from "./images/9.jpg";
 import img10 from "./images/10.jpg";
+import img11 from "./images/11.jpg";
 
-const galleryItems = [
+export const galleryItems = [
   {
     id: 1,
     title: "JS NAME ANIMATION",
     image: img1,
-    category: "",
+    category: "JS Function",
   },
   {
     id: 2,
     title: "Frameworks & Libraries Function Comparison",
     image: img2,
-    category: "",
+    category: "JS Function",
   },
   {
     id: 3,
     title: "Snake Game With AI Wall",
     image: img3,
-    category: "",
+    category: "JS Function",
   },
   {
     id: 4,
     title: "Free Funtion",
     image: img4,
-    category: "",
+    category: "JS Function",
   },
   {
     id: 5,
     title: "Multimedia",
     image: img5,
-    category: "",
+    category: "JS Function",
   },
   {
     id: 6,
     title: "Responsive Minimal Store",
     image: img6,
-    category: "",
+    category: "Web Design",
   },
   {
     id: 7,
     title: "Website Design Blank Pink Theme",
     image: img7,
-    category: "",
+    category: "Web Design",
   },
   {
     id: 8,
     title: "Barber Shop Website Design",
     image: img8,
-    category: "",
+    category: "Web Design",
   },
   {
     id: 9,
     title: "PC Parts Store - Script Builder",
     image: img9,
-    category: "",
+    category: "JS Function",
   },
   {
     id: 10,
     title: "Set Discount with % + Countdown Timer",
     image: img10,
-    category: "",
+    category: "JS Function",
+  },
+  {
+    id: 11,
+    title: "NBA Store",
+    image: img11,
+    category: "Web Design",
   },
 ];
 
@@ -83,6 +90,19 @@ type GalleryProps = {
 
 const Gallery = ({ showViewAllButton = true, titleUnderImage = false }: GalleryProps) => {
   const [selectedImage, setSelectedImage] = useState<typeof galleryItems[0] | null>(null);
+  const [shuffledItems, setShuffledItems] = useState(galleryItems);
+  const [itemsPerSlide, setItemsPerSlide] = useState(8);
+  const [startIndex, setStartIndex] = useState(0);
+  const [progress, setProgress] = useState(0);
+
+  const visibleItems =
+    shuffledItems.length === 0
+      ? []
+      : Array.from(
+          { length: Math.min(itemsPerSlide, shuffledItems.length) },
+          (_, i) => shuffledItems[(startIndex + i) % shuffledItems.length]
+        );
+
   const navigate = useNavigate();
 
   const handleItemClick = (item: typeof galleryItems[0]) => {
@@ -106,10 +126,57 @@ const Gallery = ({ showViewAllButton = true, titleUnderImage = false }: GalleryP
       navigate("/frameworks-comparison#section4");
     } else if (item.id === 10) {
       navigate("/frameworks-comparison#section5");
+    } else if (item.id === 11) {
+      window.open("https://ken4droidph.github.io/nbastore/", "_blank");
     } else {
       setSelectedImage(item);
     }
   };
+
+  useEffect(() => {
+    const shuffled = [...galleryItems].sort(() => Math.random() - 0.5);
+    setShuffledItems(shuffled);
+  }, []);
+
+  useEffect(() => {
+    const updateItemsPerSlide = () => {
+      if (typeof window === "undefined") return;
+      const width = window.innerWidth;
+      const next = width < 768 ? 4 : 8; // mobile: 4 (2x2), desktop: 8
+      setItemsPerSlide(next);
+      setStartIndex(0);
+    };
+
+    updateItemsPerSlide();
+    window.addEventListener("resize", updateItemsPerSlide);
+
+    return () => {
+      window.removeEventListener("resize", updateItemsPerSlide);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (shuffledItems.length === 0 || itemsPerSlide <= 0) return;
+
+    const step = Math.min(itemsPerSlide, shuffledItems.length);
+
+    const interval = window.setInterval(() => {
+      setStartIndex((prev) => (prev + step) % shuffledItems.length);
+      setProgress(0);
+    }, 7000);
+
+    const progressInterval = window.setInterval(() => {
+      setProgress((prev) => {
+        const next = prev + 100 / 70; // 70 steps for 7 seconds
+        return next >= 100 ? 0 : next;
+      });
+    }, 100);
+
+    return () => {
+      window.clearInterval(interval);
+      window.clearInterval(progressInterval);
+    };
+  }, [shuffledItems.length, itemsPerSlide]);
 
   return (
     <section id="gallery" className="relative py-32 overflow-hidden">
@@ -132,53 +199,75 @@ const Gallery = ({ showViewAllButton = true, titleUnderImage = false }: GalleryP
         </motion.div>
 
         {/* 4-Image Grid (2x2) */}
-        <div className="relative">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.6 }}
-            className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6"
-          >
-            {galleryItems.map((item, index) => (
-              <motion.div
-                key={item.id}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.05, duration: 0.5 }}
-                whileHover={{ y: -10 }}
-                className="relative group"
-              >
-                <div className="relative overflow-hidden rounded-2xl border border-border/50 aspect-[4/3]">
-                  <img
-                    src={item.image}
-                    alt={item.title}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 cursor-pointer"
-                    onClick={() => handleItemClick(item)}
-                  />
-                  
-                  {/* Overlay - only show when titleUnderImage is false */}
-                  {!titleUnderImage && (
-                    <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-end p-4 md:p-6 pointer-events-none">
-                      <div className="space-y-1 md:space-y-2">
-                        <span className="text-primary text-xs md:text-sm font-medium">{item.category}</span>
-                        <h3 className="text-foreground text-sm md:text-xl font-bold">{item.title}</h3>
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6 }}
+          className="relative overflow-hidden"
+        >
+          <AnimatePresence initial={false} mode="wait">
+            <motion.div
+              key={startIndex}
+              initial={{ x: "100%", opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              exit={{ x: "-100%", opacity: 0 }}
+              transition={{ duration: 1.2, ease: "easeInOut" }}
+              className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6"
+            >
+              {visibleItems.map((item, index) => (
+                <motion.div
+                  key={item.id}
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.05, duration: 0.5 }}
+                  whileHover={{ y: -10 }}
+                  className="relative group"
+                >
+                  <div className="relative overflow-hidden rounded-2xl border border-border/50 aspect-[4/3]">
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 cursor-pointer"
+                      onClick={() => handleItemClick(item)}
+                    />
+                    
+                    {/* Overlay - only show when titleUnderImage is false */}
+                    {!titleUnderImage && (
+                      <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-end p-4 md:p-6 pointer-events-none">
+                        <div className="space-y-1 md:space-y-2">
+                          <span className="text-primary text-xs md:text-sm font-medium">{item.category}</span>
+                          <h3 className="text-foreground text-sm md:text-xl font-bold">{item.title}</h3>
+                        </div>
                       </div>
+                    )}
+
+                  </div>
+                  
+                  {/* Title under image - only show when titleUnderImage is true */}
+                  {titleUnderImage && (
+                    <div className="mt-3 px-2">
+                      <h3 className="text-foreground text-sm md:text-base font-bold text-center line-clamp-2">{item.title}</h3>
                     </div>
                   )}
+                </motion.div>
+              ))}
+            </motion.div>
+          </AnimatePresence>
+        </motion.div>
 
-                </div>
-                
-                {/* Title under image - only show when titleUnderImage is true */}
-                {titleUnderImage && (
-                  <div className="mt-3 px-2">
-                    <h3 className="text-foreground text-sm md:text-base font-bold text-center line-clamp-2">{item.title}</h3>
-                  </div>
-                )}
-              </motion.div>
-            ))}
-          </motion.div>
+        {/* Progress Bar */}
+        <div className="mt-6 w-full relative">
+          {/* Track + main bar */}
+          <div className="h-1 bg-border/30 rounded-full overflow-hidden">
+            <motion.div
+              className="h-full bg-primary"
+              initial={{ width: "0%" }}
+              animate={{ width: `${progress}%` }}
+              transition={{ duration: 0.1, ease: "linear" }}
+            />
+          </div>
         </div>
 
         {showViewAllButton && (
