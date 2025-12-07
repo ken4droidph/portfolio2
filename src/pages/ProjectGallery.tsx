@@ -63,6 +63,10 @@ const ProjectGallery = () => {
       navigate("/frameworks-comparison#section5");
     } else if (item.id === 11) {
       window.open("https://ken4droidph.github.io/nbastore/", "_blank");
+    } else if (item.id === 12) {
+      window.open("https://ken4droidph.github.io/nbay/", "_blank");
+    } else if (item.id === 13) {
+      window.open("https://ken4droidph.github.io/stalluxe2/", "_blank");
     }
   };
 

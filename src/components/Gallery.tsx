@@ -14,6 +14,9 @@ import img9 from "./images/9.jpg";
 import img10 from "./images/10.jpg";
 import img11 from "./images/11.jpg";
 
+import img12 from "./images/12.jpg";
+import img13 from "./images/13.jpg";
+
 export const galleryItems = [
   {
     id: 1,
@@ -77,8 +80,20 @@ export const galleryItems = [
   },
   {
     id: 11,
-    title: "NBA Store",
+    title: "NBA Store 1",
     image: img11,
+    category: "Web Design",
+  },
+  {
+    id: 12,
+    title: "NBA Store 2",
+    image: img12,
+    category: "Web Design",
+  },
+  {
+    id: 13,
+    title: "Stalluxe 2 Store",
+    image: img13,
     category: "Web Design",
   },
 ];
@@ -128,6 +143,10 @@ const Gallery = ({ showViewAllButton = true, titleUnderImage = false }: GalleryP
       navigate("/frameworks-comparison#section5");
     } else if (item.id === 11) {
       window.open("https://ken4droidph.github.io/nbastore/", "_blank");
+    } else if (item.id === 12) {
+      window.open("https://ken4droidph.github.io/nbay/", "_blank");
+    } else if (item.id === 13) {
+      window.open("https://ken4droidph.github.io/stalluxe2/", "_blank");
     } else {
       setSelectedImage(item);
     }
