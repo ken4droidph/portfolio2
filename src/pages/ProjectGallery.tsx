@@ -30,6 +30,9 @@ const ProjectGallery = () => {
   const [inputValue, setInputValue] = useState("");
   const [isSending, setIsSending] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [isVoiceOn, setIsVoiceOn] = useState(true);
+  const [hasSpokenWelcome, setHasSpokenWelcome] = useState(false);
+  const [lastSpokenIndex, setLastSpokenIndex] = useState(-1);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
   const [viewMode, setViewMode] = useState<"split" | "web" | "js">("split");
@@ -67,6 +70,8 @@ const ProjectGallery = () => {
       window.open("https://ken4droidph.github.io/nbay/", "_blank");
     } else if (item.id === 13) {
       window.open("https://ken4droidph.github.io/stalluxe2/", "_blank");
+    } else if (item.id === 14) {
+      window.open("https://chatbotvoice.vercel.app/", "_blank");
     }
   };
 
@@ -129,6 +134,44 @@ const ProjectGallery = () => {
       messagesEndRef.current.scrollIntoView({ behavior: "smooth", block: "end" });
     }
   }, [messages, isChatOpen]);
+
+  useEffect(() => {
+    if (!isChatOpen) {
+      setHasSpokenWelcome(false);
+      return;
+    }
+    if (!isVoiceOn) return;
+    if (hasSpokenWelcome) return;
+    if (typeof window === "undefined") return;
+    if (!("speechSynthesis" in window)) return;
+
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance("Hay, Need something?");
+    utterance.lang = "en-US";
+    window.speechSynthesis.speak(utterance);
+    setHasSpokenWelcome(true);
+    setLastSpokenIndex(messages.length - 1);
+  }, [isChatOpen, isVoiceOn, hasSpokenWelcome, messages]);
+
+  useEffect(() => {
+    if (!isChatOpen) return;
+    if (!isVoiceOn) return;
+    if (!hasSpokenWelcome && messages.length > 0) return;
+    if (typeof window === "undefined") return;
+    if (!("speechSynthesis" in window)) return;
+
+    const lastIndex = messages.length - 1;
+    if (lastIndex <= lastSpokenIndex) return;
+
+    const lastMessage = messages[lastIndex];
+    if (!lastMessage || lastMessage.role !== "assistant") return;
+
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(lastMessage.content);
+    utterance.lang = "en-US";
+    window.speechSynthesis.speak(utterance);
+    setLastSpokenIndex(lastIndex);
+  }, [messages, isChatOpen, lastSpokenIndex, isVoiceOn, hasSpokenWelcome]);
 
   const persistMessages = (msgs: ChatMessage[]) => {
     try {
@@ -623,7 +666,21 @@ Rules:
                 </button>
 
                 <div className="p-3 flex flex-col gap-2">
-                  <div className="flex items-center justify-end mb-1">
+                  <div className="flex items-center justify-between mb-1">
+                    <button
+                      type="button"
+                      onClick={() => setIsVoiceOn((prev) => !prev)}
+                      className="inline-flex items-center gap-1 text-[10px] text-muted-foreground hover:text-foreground"
+                    >
+                      <span className="inline-flex items-center gap-1">
+                        <span
+                          className={`w-2 h-2 rounded-full ${
+                            isVoiceOn ? "bg-green-400" : "bg-zinc-500"
+                          }`}
+                        />
+                        <span>{isVoiceOn ? "Voice On" : "Voice Off"}</span>
+                      </span>
+                    </button>
                     <button
                       type="button"
                       onClick={handleClearTopicAndHistory}

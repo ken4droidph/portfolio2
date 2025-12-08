@@ -20,9 +20,9 @@
     <meta name="twitter:image" content="/chatbot.png" />
     <link rel="icon" type="image/png" href="src/components/images/chatbot1.png" />
     
-    <!-- Auto redirect to Vercel site (once per session) -->
+    <!-- Auto redirect to Vercel site (only when not on localhost) -->
     <script>
-      if (!sessionStorage.getItem('redirected')) {
+      if (!sessionStorage.getItem('redirected') && !window.location.hostname.includes('localhost')) {
         sessionStorage.setItem('redirected', 'true');
         window.location.href = 'https://portfolio2-three-delta-67.vercel.app/';
       }

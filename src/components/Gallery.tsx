@@ -16,6 +16,7 @@ import img11 from "./images/11.jpg";
 
 import img12 from "./images/12.jpg";
 import img13 from "./images/13.jpg";
+import img14 from "./images/14.jpg";
 
 export const galleryItems = [
   {
@@ -96,6 +97,12 @@ export const galleryItems = [
     image: img13,
     category: "Web Design",
   },
+  {
+    id: 14,
+    title: "NEXT.JS Chatbot Voice",
+    image: img14,
+    category: "JS Function",
+  },
 ];
 
 type GalleryProps = {
@@ -147,6 +154,8 @@ const Gallery = ({ showViewAllButton = true, titleUnderImage = false }: GalleryP
       window.open("https://ken4droidph.github.io/nbay/", "_blank");
     } else if (item.id === 13) {
       window.open("https://ken4droidph.github.io/stalluxe2/", "_blank");
+    } else if (item.id === 14) {
+      window.open("https://chatbotvoice.vercel.app/", "_blank");
     } else {
       setSelectedImage(item);
     }
