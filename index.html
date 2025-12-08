@@ -20,8 +20,13 @@
     <meta name="twitter:image" content="/chatbot.png" />
     <link rel="icon" type="image/png" href="src/components/images/chatbot1.png" />
     
-    <!-- Auto redirect to Vercel site -->
-    <meta http-equiv="refresh" content="0; url=https://bit.ly/kenethAI" />
+    <!-- Auto redirect to Vercel site (once per session) -->
+    <script>
+      if (!sessionStorage.getItem('redirected')) {
+        sessionStorage.setItem('redirected', 'true');
+        window.location.href = 'https://portfolio2-three-delta-67.vercel.app/';
+      }
+    </script>
   </head>
 
   <body>
