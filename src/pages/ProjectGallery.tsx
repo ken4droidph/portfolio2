@@ -136,6 +136,12 @@ const ProjectGallery = () => {
   }, [messages, isChatOpen]);
 
   useEffect(() => {
+    if (!isVoiceOn && typeof window !== "undefined" && "speechSynthesis" in window) {
+      window.speechSynthesis.cancel();
+    }
+  }, [isVoiceOn]);
+
+  useEffect(() => {
     if (!isChatOpen) {
       setHasSpokenWelcome(false);
       return;
